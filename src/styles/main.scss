@@ -1,0 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
+
+// ? Reassign any bulma variables
+$family-sans-serif: "Roboto", sans-serif;
+
+// ! example on how to customize, skip to section "Add your own Bulma styles":
+// https://bulma.io/documentation/customize/with-sass-cli/
+
+// ? Import bulma
+@import "../../node_modules/bulma/bulma.sass";
