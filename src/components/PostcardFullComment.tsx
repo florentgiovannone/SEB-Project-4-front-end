@@ -7,7 +7,7 @@ import axios from "axios"
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-function PostCardFullComment({ title, content, code, image, user, id, category, like }: IPost) {
+function PostCardFullComment({ title, content, code, image, user, id, category, like, comment }: IPost) {
   const [post, updateposts] = React.useState<IPost | null>(null)
   const [currentUser, updateCurrentUser] = useState<IUser | null>(null);
   const { postId } = useParams()
@@ -42,7 +42,7 @@ function PostCardFullComment({ title, content, code, image, user, id, category, 
       const resp = await axios.delete(`/api/posts/${post?.id}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
-      location.reload()
+      navigate('/stream')
     } catch (error) {
     }
   }
@@ -130,7 +130,7 @@ function PostCardFullComment({ title, content, code, image, user, id, category, 
             </div>
             <div className="column ">
               <p className="title is-4">{`${user.username} is feeling ${category}`}</p>
-            <p className=" is-4">{`${like.length} Likes`}</p>
+            <p className=" is-4">{`${like.length} Likes | ${comment.length} Comments`}</p>
               {/* <p className="subtitle is-6">{`${user.firstname}`}</p>
             <p className="subtitle is-6">{`${user.lastname}`}</p> */}
             </div>
@@ -148,8 +148,8 @@ function PostCardFullComment({ title, content, code, image, user, id, category, 
         <div className="card-footer">
           {(liked !== "liked") && <button onClick={handleLike} className="card-footer-item">like</button>}
           {(liked === "liked") && <button onClick={handleDislike} className="card-footer-item">dislike</button>}
-          {post && currentUser && (currentUser.id === post.user.id) && <button onClick={deletePost} className="card-footer-item">Delete</button>}
-          {post && currentUser && (currentUser.id === post.user.id) && <a className="card-footer-item" href={`/update/${id}`}><button>Update</button></a>}
+          {post && currentUser && (currentUser.id === post.user.id) && <button onClick={deletePost} className="card-footer-item">Delete Post</button>}
+          {post && currentUser && (currentUser.id === post.user.id) && <a className="card-footer-item" href={`/update/${id}`}><button>Edit Post</button></a>}
         </div>
           <div className="card-content ml-3">
             <div className="block title">

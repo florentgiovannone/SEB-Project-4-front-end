@@ -10,7 +10,7 @@ import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 
 
-function PostCardFull({ title, content, code, image, user, id, category, date, like }: IPost) {
+function PostCardFull({ title, content, code, image, user, id, category, date, like, comment }: IPost) {
   const [post, updateposts] = React.useState<IPost | null>(null);
   const [currentUser, updateCurrentUser] = useState<IUser | null>(null);
   const { postId } = useParams()
@@ -112,7 +112,7 @@ function PostCardFull({ title, content, code, image, user, id, category, date, l
           </div>
           <div className="column ">
             <p className="title is-4">{`${user.username} is feeling ${category}`}</p>
-            <p className="  has-text-black is-4">{`${like.length} Likes`}</p>
+            <p className="  has-text-white is-4">{`${like.length} Likes | ${comment.length} Comments`}</p>
             {/* <p className="subtitle is-6">{`${user.firstname}`}</p>
             <p className="subtitle is-6">{`${user.lastname}`}</p> */}
           </div>
@@ -131,8 +131,8 @@ function PostCardFull({ title, content, code, image, user, id, category, date, l
         <div className="card-footer">
         {(liked !== "liked") && <button onClick={handleLike} className="card-footer-item">like</button>}
           {(liked === "liked") && <button onClick={handleDislike} className="card-footer-item">dislike</button>}
-          {post && currentUser && (currentUser.id === post.user.id) && <button onClick={deletePost} className="card-footer-item">Delete</button>}
-          {post && currentUser && (currentUser.id === post.user.id) && <a className="card-footer-item" href={`/update/${id}`}><button>Update</button></a>}
+        {post && currentUser && (currentUser.id === post.user.id) && <button onClick={deletePost} className="card-footer-item">Delete Post</button>}
+        {post && currentUser && (currentUser.id === post.user.id) && <a className="card-footer-item" href={`/update/${id}`}><button>Edit Post</button></a>}
         </div>
       <div className="card-content ml-3">
             <div className="block title">

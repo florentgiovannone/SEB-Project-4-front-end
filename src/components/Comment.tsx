@@ -33,10 +33,10 @@ function Comment({ content, user, id}: IComment) {
   async function deletePost(e: SyntheticEvent) {
     try {
       const token = localStorage.getItem('token')
-      const resp = await axios.delete(`/api/posts/${id}`, {
+      const resp = await axios.delete(`/api/comments/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
-      navigate('/posts')
+      navigate('/stream')
     } catch (error) {
     }
   }
@@ -81,8 +81,8 @@ function Comment({ content, user, id}: IComment) {
         </div>
       </article>
       <footer className="card-footer">
-      {user && currentUser && (currentUser.id === user.id) && <button onClick={deletePost} className="card-footer-item">Delete</button>}
-      {user && currentUser && (currentUser.id === user.id) && <a className="card-footer-item" href={`/update/${id}`}><button>Update</button></a>}
+      {user && currentUser && (currentUser.id === user.id) && <button onClick={deletePost} className="card-footer-item">Delete Comment</button>}
+      {user && currentUser && (currentUser.id === user.id) && <a className="card-footer-item" href={`/updateComment/${id}`}><button>Edit Comment</button></a>}
       </footer>
     </div>
   </section>

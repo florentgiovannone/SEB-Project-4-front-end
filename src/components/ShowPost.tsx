@@ -59,7 +59,7 @@ function ShowPost(this: any, { user }: { user: null | IUser }) {
             />}
             {comment?.map((comment: { id: any, user: any }) => {
                 return <Comment
-                    date={""} content={""} key={comment.id}
+                    content={""} key={comment.id}
                     {...comment}                />
             })} 
             <div>{text && (

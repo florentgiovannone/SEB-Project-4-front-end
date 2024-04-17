@@ -16,12 +16,18 @@ import Dashboard from "./components/Dashboard"
 import UserDashboard from "./components/UserDashboard"
 import UserPosts from "./components/UserPosts"
 import ShowPost from "./components/ShowPost"
+import UpdatePost from "./components/UpdatePost"    
+import UpdateComment from "./components/UpdateComment"
 // import { baseUrl } from "./config";
 
 function App() {
 
   const [user, setUser] = useState(null)
 
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    if (token) fetchUser()
+  }, [])
 
   async function fetchUser() {
     const token = localStorage.getItem('token')
@@ -29,22 +35,6 @@ function App() {
       headers: { Authorization: `Bearer ${token}` }
     })
     setUser(resp.data)
-  }
-  console.log(user);
-  
-
-  useEffect(() => {
-    const token = localStorage.getItem('token')
-    if (token) fetchUser()
-  }, [])
-
-  const [post, setPost] = useState(null)
-
-
-  async function fetchPosts() {
-    const token = localStorage.getItem('token')
-    const resp = await axios.get(`/api/posts`)
-    setPost(resp.data)
   }
 
 return (
@@ -65,6 +55,8 @@ return (
       <Route path="/account/:userId" element={<UserDashboard />} />
       <Route path="/post/:userId" element={<UserPosts />} />
       <Route path="/posts/:postId" element={<ShowPost user={user} />} />
+      <Route path="/update/:postId" element={<UpdatePost user={user} />} />
+      <Route path="/updateComment/:commentId" element={<UpdateComment user={user} />} />
     </Routes>
   </Router>
 )
