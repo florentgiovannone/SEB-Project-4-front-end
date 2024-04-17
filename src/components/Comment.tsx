@@ -7,7 +7,7 @@ import { IComment } from "../interfaces/comment"
 import axios from "axios"
 
 
-function PostCard({ content, user, id}: IComment) {
+function Comment({ content, user, id}: IComment) {
   const [post, updateposts] = React.useState<IPost | null>(null)
   const [formData, setFormData] = useState("")
 
@@ -88,4 +88,4 @@ function PostCard({ content, user, id}: IComment) {
   </section>
   </>
 }
-export default PostCard
+export default Comment

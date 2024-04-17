@@ -1,5 +1,6 @@
 import { IUser } from "./user";
 import { IComment } from "./comment"
+import { ILike } from "./like"
 
 export interface IPost {
     id: string,
@@ -10,5 +11,7 @@ export interface IPost {
     category: string,
     code: string,
     user: IUser
+    date: string
     comment: Array <IComment>
+    like: Array<ILike>
 }

@@ -67,7 +67,7 @@ export default function Post() {
                     <label className="label">Content <span className="has-text-danger">*</span></label>
                     <div className="control">
                         <input
-                            className="input border-is-rouge"
+                            className="input border-is-rouge textarea"
                             placeholder="Content"
                             type="text"
                             name={'content'}
@@ -79,13 +79,13 @@ export default function Post() {
                 <div className="field mt-4">
                     <label className="label">Code <span className="has-text-danger">*</span></label>
                     <div className="control">
-                        <input
-                            className="input border-is-rouge"
+                        <textarea
+                            className="input border-is-rouge textarea"
                             placeholder="Code"
-                            type="text"
                             name={'code'}
                             onChange={handleChange}
                             value={formData.code}
+                            
                         />
                     </div>
                 </div>

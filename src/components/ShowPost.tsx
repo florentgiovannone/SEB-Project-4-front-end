@@ -1,12 +1,12 @@
 import React, { SyntheticEvent, useEffect, useState, Component } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { IPost } from "../interfaces/post"
-import PostCardComment from "./Comment"
+import PostCardFullComment from "./PostcardFullComment"
 import axios from "axios"
 import { IUser } from "../interfaces/user"
 import { IComment } from "../interfaces/comment"
 import Footer from "./Footer"
-import PostCardFull from "./PostcardFullComment"
+import Comment from "./Comment"
 // import { baseUrl } from "../config";
 
 type Comment = null | Array<IComment>
@@ -49,21 +49,22 @@ function ShowPost(this: any, { user }: { user: null | IUser }) {
             </div>);
         }
     }
-    
-    return <> <section className="section">
-        <div className="container has-text-centered is-widescreen">
 
-            {post && <PostCardFull
+    return <> <section className="section">
+        <div className="container  is-widescreen">
+
+            {post && <PostCardFullComment
                 key={post.id}
                 {...post}
             />}
             {comment?.map((comment: { id: any, user: any }) => {
-                return <PostCardComment
-                    content={""} key={comment.id}
+                return <Comment
+                    date={""} content={""} key={comment.id}
                     {...comment}                />
             })} 
             <div>{text && (
-                <div className="notification is-grey background-is-rouge" >
+                <div className="notification" >
+
                     <button className="delete" onClick={() => { setText(''); window.location.reload(); }} ></button>
                     {text}
                 </div>)}

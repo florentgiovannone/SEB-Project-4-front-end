@@ -4,13 +4,15 @@ import { Link } from "react-router-dom"
 import { IPost } from "../interfaces/post"
 import { IUser } from "../interfaces/user"
 import axios from "axios"
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-function PostCardFull({ title, content, code, image, user, id, category }: IPost) {
+function PostCardFullComment({ title, content, code, image, user, id, category, like }: IPost) {
   const [post, updateposts] = React.useState<IPost | null>(null)
   const [currentUser, updateCurrentUser] = useState<IUser | null>(null);
   const { postId } = useParams()
   const navigate = useNavigate()
-
+  let liked = ""
 
   React.useEffect(() => {
     async function fetchposts() {
@@ -37,10 +39,49 @@ function PostCardFull({ title, content, code, image, user, id, category }: IPost
   async function deletePost(e: SyntheticEvent) {
     try {
       const token = localStorage.getItem('token')
-      const resp = await axios.delete(`api/posts/${id}`, {
+      const resp = await axios.delete(`/api/posts/${post?.id}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
-      navigate('/posts')
+      location.reload()
+    } catch (error) {
+    }
+  }
+
+  function checkIfLiked() {
+    like.filter(like => {
+      if (like.user.id === currentUser?.id) {
+        liked = "liked"
+      }
+    })
+  }
+  checkIfLiked()
+  async function handleLike(e: SyntheticEvent) {
+    try {
+      const token = localStorage.getItem('token')
+      const resp = await axios.post(`/api/posts/${id}/likes`, formData, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      if (resp.data.message) {
+        throw new Error(resp.data.message);
+      }
+      location.reload()
+    } catch (e: any) {
+      setErrorData(e.message)
+    }
+
+  }
+  async function handleDislike(e: SyntheticEvent) {
+    try {
+      like.filter(async like => {
+        if (like.user.id === currentUser?.id) {
+          const token = localStorage.getItem('token')
+          const resp = await axios.delete(`/api/likes/${like.id}`, {
+            headers: { Authorization: `Bearer ${token}` }
+          })
+        }
+        location.reload()
+      })
+
     } catch (error) {
     }
   }
@@ -74,51 +115,64 @@ function PostCardFull({ title, content, code, image, user, id, category }: IPost
     }
   }
 
-
   return <> <section className="section">
-    <Link to={`/posts/${id}`}>
-    <div className="card">
-      <footer className="card-footer">
-        {post && currentUser && (currentUser.id === post.user.id) && <button onClick={deletePost} className="card-footer-item">Delete</button>}
-        {post && currentUser && (currentUser.id === post.user.id) && <a className="card-footer-item" href={`/update/${id}`}><button>Update</button></a>}
-      </footer>
-      {post?.image && <div className="card-image">
-        <figure className="image is-square">
-          <img
-            src={image}
-            alt="Placeholder image"
-          />
-        </figure>
-      </div>}
-      <div className="card-content">
-        <div className="media m-6">
-          <div className="media-left">
-            <figure className="image is-128x128 mb-4">
+
+        <div className="card">
+          <div className="columns mt-6 mb-6">
+            <div className="media-left ml-6">
+              <figure className="image is-96x96">
+                <img
+                  className="is-rounded"
+                  src={user.image}
+                  alt="Placeholder image"
+                />
+              </figure>
+            </div>
+            <div className="column ">
+              <p className="title is-4">{`${user.username} is feeling ${category}`}</p>
+            <p className=" is-4">{`${like.length} Likes`}</p>
+              {/* <p className="subtitle is-6">{`${user.firstname}`}</p>
+            <p className="subtitle is-6">{`${user.lastname}`}</p> */}
+            </div>
+
+          </div>
+
+          {post?.image && <div className="card-image">
+            <figure className="image is-square">
               <img
-                src={user.image}
+                src={image}
                 alt="Placeholder image"
               />
             </figure>
-          </div>
-          <div className="media-content">
-            <p className="title is-4">{user.username}</p>
-            <p className="subtitle is-6">{`${user.firstname}`}</p>
-            <p className="subtitle is-6">{`${user.lastname}`}</p>
-            <p className="subtitle is-6">{`Feeling ${category}`}</p>
+          </div>}
+        <div className="card-footer">
+          {(liked !== "liked") && <button onClick={handleLike} className="card-footer-item">like</button>}
+          {(liked === "liked") && <button onClick={handleDislike} className="card-footer-item">dislike</button>}
+          {post && currentUser && (currentUser.id === post.user.id) && <button onClick={deletePost} className="card-footer-item">Delete</button>}
+          {post && currentUser && (currentUser.id === post.user.id) && <a className="card-footer-item" href={`/update/${id}`}><button>Update</button></a>}
+        </div>
+          <div className="card-content ml-3">
+            <div className="block title">
+              {title}
             </div>
-            <p>{title}</p>
+            <div className="block subtitle">
+              {post?.content && `${content}`}
+            </div>
+
             <br />
-            {post?.content && <p>{content}</p>}
-            <br />
-            {post?.code && <pre> 
-              <code className="language-html line-numbers" data-prismjscopy="copy the html snippet!">{code}</code>
-            </pre>}
+            <div className="block">
+            {post?.code && 
+              <SyntaxHighlighter style={prism} showLineNumbers>{code}</SyntaxHighlighter>
+            }
+            </div>
+            
+          </div>
 
         </div>
           {currentUser && <>
           <footer className="card-footer">
               <textarea 
-                className="textarea"
+                className="textarea p-4"
                 name={'content'}
                 onChange={handleChange}
                 value={formData.content} 
@@ -128,11 +182,8 @@ function PostCardFull({ title, content, code, image, user, id, category }: IPost
           <button onClick={commentPost} className="card-footer-item is-centered ">Comment</button>
             </div></>}
 
-      </div>
 
-    </div>
-    </Link>
   </section>
   </>
 }
-export default PostCardFull
+export default PostCardFullComment

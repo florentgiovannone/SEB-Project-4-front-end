@@ -144,7 +144,7 @@ export default function Signup() {
               onChange={handleChange}
               value={formData.password_confirmation}
             />
-            <small className="has-text-danger">{errorData}</small>
+            <h2 className="has-text-danger">{errorData}</h2>
           </div>
         </div>
         <button className="button border-is-rouge  mt-4">Submit</button>

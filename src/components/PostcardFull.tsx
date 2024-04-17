@@ -3,14 +3,19 @@ import { useParams, useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { IPost } from "../interfaces/post"
 import { IUser } from "../interfaces/user"
+import { ILike } from "../interfaces/like"
 import axios from "axios"
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-function PostCardFull({ title, content, code, image, user, id, category }: IPost) {
-  const [post, updateposts] = React.useState<IPost | null>(null)
+
+
+function PostCardFull({ title, content, code, image, user, id, category, date, like }: IPost) {
+  const [post, updateposts] = React.useState<IPost | null>(null);
   const [currentUser, updateCurrentUser] = useState<IUser | null>(null);
   const { postId } = useParams()
   const navigate = useNavigate()
-
+  let liked = ""
 
   React.useEffect(() => {
     async function fetchposts() {
@@ -37,34 +42,28 @@ function PostCardFull({ title, content, code, image, user, id, category }: IPost
   async function deletePost(e: SyntheticEvent) {
     try {
       const token = localStorage.getItem('token')
-      const resp = await axios.delete(`api/posts/${id}`, {
+      const resp = await axios.delete(`/api/posts/${post?.id}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
-      navigate('/posts')
+      location.reload()
     } catch (error) {
     }
   }
 
-  const [formData, setFormData] = useState({
-    content: ""
-  })
-  const [errorData, setErrorData] = useState("")
-
-  function handleChange(e: any) {
-    const fieldName = e.target.name
-    const newFormData = structuredClone(formData)
-    newFormData[fieldName as keyof typeof formData] = e.target.value
-    setFormData(newFormData)
-    setErrorData("")
+  function checkIfLiked() {
+    like.filter(like => {
+      if (like.user.id === currentUser?.id) {
+        liked = "liked"
+      }
+    })
   }
-
-  async function commentPost(e: SyntheticEvent) {
+  checkIfLiked()
+  async function handleLike(e: SyntheticEvent) {
     try {
       const token = localStorage.getItem('token')
-      const resp = await axios.post(`/api/posts/${id}/comments`, formData, {
+      const resp = await axios.post(`/api/posts/${id}/likes`, formData, {
         headers: { Authorization: `Bearer ${token}` }
       })
-      const newFormData = structuredClone(formData)
       if (resp.data.message) {
         throw new Error(resp.data.message);
       }
@@ -72,16 +71,35 @@ function PostCardFull({ title, content, code, image, user, id, category }: IPost
     } catch (e: any) {
       setErrorData(e.message)
     }
+
   }
+  async function handleDislike(e: SyntheticEvent) {
+    try {
+      like.filter(async like => {
+        if (like.user.id === currentUser?.id) {
+          const token = localStorage.getItem('token')
+          const resp = await axios.delete(`/api/likes/${like.id}`, {
+            headers: { Authorization: `Bearer ${token}` }
+          })
+        }
+        location.reload()
+})
+
+    } catch (error) {
+    }
+  }
+  
+  const [formData, setFormData] = useState({
+    content: ""
+  })
+  const [errorData, setErrorData] = useState("")
+  
 
 
   return <> <section className="section">
-    <Link to={`/posts/${id}`}>
+
     <div className="card">
-      <div className="card-footer">
-        {post && currentUser && (currentUser.id === post.user.id) && <button onClick={deletePost} className="card-footer-item">Delete</button>}
-        {post && currentUser && (currentUser.id === post.user.id) && <a className="card-footer-item" href={`/update/${id}`}><button>Update</button></a>}
-      </div>
+      <Link to={`/posts/${id}`}>
       <div className="columns mt-6 mb-6">
           <div className="media-left ml-6">
             <figure className="image is-96x96">
@@ -94,6 +112,7 @@ function PostCardFull({ title, content, code, image, user, id, category }: IPost
           </div>
           <div className="column ">
             <p className="title is-4">{`${user.username} is feeling ${category}`}</p>
+            <p className="  has-text-black is-4">{`${like.length} Likes`}</p>
             {/* <p className="subtitle is-6">{`${user.firstname}`}</p>
             <p className="subtitle is-6">{`${user.lastname}`}</p> */}
           </div>
@@ -108,6 +127,13 @@ function PostCardFull({ title, content, code, image, user, id, category }: IPost
           />
         </figure>
       </div>}
+    </Link>
+        <div className="card-footer">
+        {(liked !== "liked") && <button onClick={handleLike} className="card-footer-item">like</button>}
+          {(liked === "liked") && <button onClick={handleDislike} className="card-footer-item">dislike</button>}
+          {post && currentUser && (currentUser.id === post.user.id) && <button onClick={deletePost} className="card-footer-item">Delete</button>}
+          {post && currentUser && (currentUser.id === post.user.id) && <a className="card-footer-item" href={`/update/${id}`}><button>Update</button></a>}
+        </div>
       <div className="card-content ml-3">
             <div className="block title">
               {title}
@@ -116,14 +142,15 @@ function PostCardFull({ title, content, code, image, user, id, category }: IPost
               {post?.content && `${content}`}
             </div>
             
-            <br />
-            {post?.code && <pre> 
-              <code className="language-html line-numbers" data-prismjscopy="copy the html snippet!">{code}</code>
-            </pre>}
+          <br />           <div className="block">
+            {post?.code &&
+              <SyntaxHighlighter style={prism} showLineNumbers>{code}</SyntaxHighlighter>
+            }
+          </div>
         </div>
 
     </div>
-    </Link>
+
   </section>
   </>
 }
