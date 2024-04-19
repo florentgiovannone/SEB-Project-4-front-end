@@ -26,12 +26,12 @@ export default function Login({ fetchUser }: { fetchUser: Function }) {
   async function handleSubmit(e: SyntheticEvent) {
     e.preventDefault();
     try {
-      const resp = await axios.post('${baseUrl}/login', formData);
+      const resp = await axios.post(`${baseUrl}/login`, formData);
       localStorage.setItem('token', resp.data.token);
       await fetchUser(); // Assuming this function exists and fetches user data
       navigate('/'); // Assuming this function exists and navigates to the home page
     } catch (error: any) {
-      const resp = await axios.post('${baseUrl}/login', formData);
+      const resp = await axios.post(`${baseUrl}/login`, formData);
       setErrorMessage(resp.data.error); // Assuming this function exists to set error messages
       console.log(error);
       
