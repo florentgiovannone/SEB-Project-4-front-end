@@ -27,7 +27,7 @@ function postList({ user }: { user: null | IUser }) {
     }
 
     function filterPosts() {
-        return posts?.sort((a: any, b: any) => b.post_date - a.post_date).filter((post: { title: string }) => {
+        return posts?.filter((post: { title: string }) => {
             const lowerSearch = search.toLowerCase();
             const lowerPostName = post.title.toLowerCase();
 
@@ -53,7 +53,7 @@ function postList({ user }: { user: null | IUser }) {
 
                 </div>}
                     <div className="columns is-multiline is-centered mb-6">
-                        {filterPosts()?.sort((a: any, b: any) => b.post_date - a.post_date).map((post) => {
+                        {filterPosts()?.map((post) => {
                             return <PostCardFull key={post.id} {...post} />;
                         })}
                     </div>
