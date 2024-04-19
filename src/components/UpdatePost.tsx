@@ -5,7 +5,9 @@ import Footer from "./Footer"
 import { IUser } from "../interfaces/user"
 import { baseUrl } from "../config";
 
-
+declare global {
+    interface Window { cloudinary: any; }
+}
 export default function UpdatePost({ user }: { user: null | IUser }) {
     const { postId } = useParams()
     const navigate = useNavigate()

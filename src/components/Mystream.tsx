@@ -61,12 +61,12 @@ function postList() {
                     <a href="/user"><button className="button is-outlined is-primary m-2">Search users</button></a>
                 </div>
                 <input
-                    className="input background-is-rouge is-rounded"
+                    className="input is-rounded mb-6"
                     placeholder="Search character..."
                     onChange={handleChange}
                     value={search}
                 />
-                {filteredLength === 0 && <div className="account  has-text-centered background-is-grey">
+                {filteredLength === 0 && <div className="account  has-text-centered ">
                     <p className="text is-black ">Cannot find your post ?</p>
                     <a href="/create"><button className="button  mb-3">Create new Post</button></a>
 

@@ -1,9 +1,8 @@
 import { IUser } from "../interfaces/user"
 import { IPost } from "../interfaces/post";
 import Footer from "./Footer"
-import React, { SyntheticEvent, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom"
 import { baseUrl } from "../config";
 
 type Wines = null | Array<IPost>

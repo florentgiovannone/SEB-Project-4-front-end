@@ -2,9 +2,9 @@ import { SyntheticEvent, useState } from "react"
 import axios from 'axios'
 import { useNavigate } from "react-router-dom"
 import Footer from "./Footer"
-import { baseUrl } from "../config";
 import React from "react";
 import { IUser } from "../interfaces/user";
+import { baseUrl } from "../config";
 
 type User = null | Array<IUser>
 export default function Signup() {
