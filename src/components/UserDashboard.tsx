@@ -1,9 +1,9 @@
 import React from "react"
-import { useParams, useNavigate } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { IUser } from "../interfaces/user"
 import Footer from "./Footer"
-import axios from "axios"
-// import { baseUrl } from "../config";
+import { baseUrl } from "../config";
+
 function UserDashboard() {
 
     const { userId } = useParams()
@@ -18,7 +18,7 @@ console.log(userId);
     const [neededUser, setUser] = React.useState<IUser | null>(null)
     React.useEffect(() => {
         async function fetchUser() {
-            const resp = await fetch(`/api/users/${userId}`)
+            const resp = await fetch(`${baseUrl}/users/${userId}`)
             console.log(resp);
             const userData = await resp.json()
             setUser(userData)            

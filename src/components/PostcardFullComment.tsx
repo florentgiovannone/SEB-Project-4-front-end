@@ -1,13 +1,12 @@
-import React, { SyntheticEvent, useEffect, useState, Component } from "react"
+import React, { SyntheticEvent, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
-import { Link } from "react-router-dom"
 import { IPost } from "../interfaces/post"
 import { IUser } from "../interfaces/user"
 import axios from "axios"
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { format } from "date-fns"
-
+import { baseUrl } from "../config";
 
 function PostCardFullComment({ title, content, code, image, user, id, category, like, post_date, comment }: IPost) {
   const [post, updateposts] = React.useState<IPost | null>(null)
@@ -18,7 +17,7 @@ function PostCardFullComment({ title, content, code, image, user, id, category, 
 
   React.useEffect(() => {
     async function fetchposts() {
-      const resp = await fetch(`/api/posts/${id}`)
+      const resp = await fetch(`${baseUrl}/posts/${id}`)
       const postsData = await resp.json()
       updateposts(postsData)
     }
@@ -27,7 +26,7 @@ function PostCardFullComment({ title, content, code, image, user, id, category, 
 
   async function fetchUser() {
     const token = localStorage.getItem('token')
-    const resp = await axios.get(`/api/user`, {
+    const resp = await axios.get(`${baseUrl}/user`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     updateCurrentUser(resp.data)
@@ -41,7 +40,7 @@ function PostCardFullComment({ title, content, code, image, user, id, category, 
   async function deletePost(e: SyntheticEvent) {
     try {
       const token = localStorage.getItem('token')
-      const resp = await axios.delete(`/api/posts/${post?.id}`, {
+      const resp = await axios.delete(`${baseUrl}/posts/${post?.id}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       navigate('/stream')
@@ -60,7 +59,7 @@ function PostCardFullComment({ title, content, code, image, user, id, category, 
   async function handleLike(e: SyntheticEvent) {
     try {
       const token = localStorage.getItem('token')
-      const resp = await axios.post(`/api/posts/${id}/likes`, formData, {
+      const resp = await axios.post(`${baseUrl}/posts/${id}/likes`, formData, {
         headers: { Authorization: `Bearer ${token}` }
       })
       if (resp.data.message) {
@@ -77,7 +76,7 @@ function PostCardFullComment({ title, content, code, image, user, id, category, 
       like.filter(async like => {
         if (like.user.id === currentUser?.id) {
           const token = localStorage.getItem('token')
-          const resp = await axios.delete(`/api/likes/${like.id}`, {
+          const resp = await axios.delete(`${baseUrl}/likes/${like.id}`, {
             headers: { Authorization: `Bearer ${token}` }
           })
         }
@@ -106,7 +105,7 @@ function PostCardFullComment({ title, content, code, image, user, id, category, 
   async function commentPost(e: SyntheticEvent) {
     try {
       const token = localStorage.getItem('token')
-      const resp = await axios.post(`/api/posts/${id}/comments`, formData, {
+      const resp = await axios.post(`${baseUrl}/posts/${id}/comments`, formData, {
         headers: { Authorization: `Bearer ${token}` }
       })
       const newFormData = structuredClone(formData)

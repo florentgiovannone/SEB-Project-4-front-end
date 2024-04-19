@@ -3,7 +3,7 @@ import axios from "axios"
 import { useNavigate, useParams } from "react-router-dom"
 import Footer from "./Footer"
 import { IUser } from "../interfaces/user"
-// import { baseUrl } from "../config";
+import { baseUrl } from "../config";
 
 
 export default function UpdatePost({ user }: { user: null | IUser }) {
@@ -24,7 +24,7 @@ export default function UpdatePost({ user }: { user: null | IUser }) {
     )
     React.useEffect(() => {
         async function fetchPosts() {
-            const resp = await fetch(`/api/posts/${postId}`)
+            const resp = await fetch(`${baseUrl}/posts/${postId}`)
             const postsData = await resp.json()
             setFormData(postsData)
         }
@@ -44,7 +44,7 @@ export default function UpdatePost({ user }: { user: null | IUser }) {
         const token = localStorage.getItem('token')
         const newFormData = structuredClone(formData)
 
-        const resp = await axios.put(`/api/posts/${postId}`, formData, {
+        const resp = await axios.put(`${baseUrl}/posts/${postId}`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

@@ -4,7 +4,7 @@ import { IPost } from "../interfaces/post"
 import Footer from "./Footer"
 import { IUser } from "../interfaces/user"
 import axios from "axios"
-// import { baseUrl } from "../config";
+import { baseUrl } from "../config";
 
 type Posts = null | Array<IPost>
 function postList() {
@@ -13,7 +13,7 @@ function postList() {
 
     async function fetchUser() {
         const token = localStorage.getItem('token')
-        const resp = await axios.get(`/api/user`, {
+        const resp = await axios.get(`${baseUrl}/user`, {
             headers: { Authorization: `Bearer ${token}` }
         })
         updateCurrentUser(resp.data)
@@ -26,7 +26,7 @@ function postList() {
 
     React.useEffect(() => {
         async function fetchPosts() {
-            const resp = await fetch(`/api/posts`)
+            const resp = await fetch(`${baseUrl}/posts`)
             const data = await resp.json()
             setPosts(data)
         }

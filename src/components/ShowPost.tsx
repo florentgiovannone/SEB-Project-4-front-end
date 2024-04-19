@@ -7,7 +7,7 @@ import { IUser } from "../interfaces/user"
 import { IComment } from "../interfaces/comment"
 import Footer from "./Footer"
 import Comment from "./Comment"
-// import { baseUrl } from "../config";
+import { baseUrl } from "../config";
 
 type Comment = null | Array<IComment>
 
@@ -19,7 +19,7 @@ function ShowPost(this: any, { user }: { user: null | IUser }) {
 
     React.useEffect(() => {
         async function fetchPost() {
-            const resp = await fetch(`/api/posts/${postId}`)
+            const resp = await fetch(`${baseUrl}/posts/${postId}`)
             const postData = await resp.json()
             setComment(postData.comment)            
         }
@@ -28,7 +28,7 @@ function ShowPost(this: any, { user }: { user: null | IUser }) {
 
     React.useEffect(() => {
         async function fetchPost() {
-            const resp = await fetch(`/api/posts/${postId}`)
+            const resp = await fetch(`${baseUrl}/posts/${postId}`)
             const postData = await resp.json()
             updatePost(postData)
         }

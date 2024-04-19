@@ -1,12 +1,10 @@
-import React, { useState } from "react"
+import React from "react"
 import PostCardFull from "./PostcardFull"
-
 import { IPost } from "../interfaces/post"
 import Footer from "./Footer"
 import { IUser } from "../interfaces/user"
-import axios from "axios"
 import { useParams } from "react-router-dom"
-// import { baseUrl } from "../config";
+import { baseUrl } from "../config";
 
 type Posts = null | Array<IPost>
 function UserPosts() {
@@ -19,7 +17,7 @@ function UserPosts() {
 console.log("user ID", userId);
 
         async function fetchUser() {
-            const resp = await fetch(`/api/users/${userId}`)
+            const resp = await fetch(`${baseUrl}/users/${userId}`)
             console.log(resp);
             const userData = await resp.json()
             setUser(userData)
@@ -31,7 +29,7 @@ console.log("user ID", userId);
 
     React.useEffect(() => {
         async function fetchPosts() {
-            const resp = await fetch(`/api/posts`)
+            const resp = await fetch(`${baseUrl}/posts`)
             const data = await resp.json()
             setPosts(data)
         }

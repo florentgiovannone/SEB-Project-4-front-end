@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import Footer from "./Footer"
 import { IUser } from "../interfaces/user"
 import { IComment } from "../interfaces/comment"
-// import { baseUrl } from "../config";
+import { baseUrl } from "../config";
 
 
 export default function UpdateComment({ user }: { user: null | IUser }, {id }: IComment) {
@@ -21,7 +21,7 @@ export default function UpdateComment({ user }: { user: null | IUser }, {id }: I
     )
     React.useEffect(() => {
         async function fetchPosts() {
-            const resp = await fetch(`/api/comments/${commentId}`)
+            const resp = await fetch(`${baseUrl}/comments/${commentId}`)
             const commentsData = await resp.json()
             setFormData(commentsData)
         }
@@ -41,7 +41,7 @@ export default function UpdateComment({ user }: { user: null | IUser }, {id }: I
         const token = localStorage.getItem('token')
         const newFormData = structuredClone(formData)
 
-        const resp = await axios.put(`/api/comments/${commentId}`, formData, {
+        const resp = await axios.put(`${baseUrl}/comments/${commentId}`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

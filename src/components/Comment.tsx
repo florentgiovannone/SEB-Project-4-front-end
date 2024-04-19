@@ -1,13 +1,12 @@
-import React, { SyntheticEvent, useEffect, useState, Component } from "react"
+import React, { SyntheticEvent, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
-import { Link } from "react-router-dom"
 import { IPost } from "../interfaces/post"
 import { IUser } from "../interfaces/user"
 import { IComment } from "../interfaces/comment"
 import axios from "axios"
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism';
-
+import { baseUrl } from "../config"
 
 function Comment({ content, code, user, id, comment_date }: IComment) {
   const [post, updateposts] = React.useState<IPost | null>(null)
@@ -21,7 +20,7 @@ function Comment({ content, code, user, id, comment_date }: IComment) {
 
   async function fetchUser() {
     const token = localStorage.getItem('token')
-    const resp = await axios.get(`/api/user`, {
+    const resp = await axios.get(`${baseUrl}/user`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     updateCurrentUser(resp.data)
@@ -35,7 +34,7 @@ function Comment({ content, code, user, id, comment_date }: IComment) {
   async function deletePost(e: SyntheticEvent) {
     try {
       const token = localStorage.getItem('token')
-      const resp = await axios.delete(`/api/comments/${id}`, {
+      const resp = await axios.delete(`${baseUrl}/comments/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       navigate('/stream')

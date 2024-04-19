@@ -2,7 +2,7 @@ import { SyntheticEvent, useState } from "react"
 import axios from 'axios'
 import { useNavigate } from "react-router-dom"
 import Footer from "./Footer"
-// import { baseUrl } from "../config";
+import { baseUrl } from "../config";
 import React from "react";
 import { IUser } from "../interfaces/user";
 
@@ -27,7 +27,7 @@ export default function Signup() {
 
   React.useEffect(() => {
     async function fetchPosts() {
-      const resp = await fetch(`/api/all_users`)
+      const resp = await fetch(`${baseUrl}/all_users`)
       const data = await resp.json()
       setUsernameError(data)
     }
@@ -107,7 +107,7 @@ export default function Signup() {
   async function handleSubmit(e: SyntheticEvent) {
     try {
       e.preventDefault()
-      const resp = await axios.post(`/api/signup`, formData)
+      const resp = await axios.post(`${baseUrl}/signup`, formData)
       console.log(resp.data)
       navigate('/login')
     } catch (e: any) {

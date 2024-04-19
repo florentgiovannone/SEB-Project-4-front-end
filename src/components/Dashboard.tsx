@@ -4,7 +4,7 @@ import Footer from "./Footer"
 import React, { SyntheticEvent, useEffect, useState } from "react"
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom"
-// import { baseUrl } from "../config";
+import { baseUrl } from "../config";
 
 type Wines = null | Array<IPost>
 
@@ -35,7 +35,7 @@ export default function Dashboard({ user }: { user: null | IUser }) {
 
     async function fetchUser() {
         const token = localStorage.getItem('token')
-        const resp = await axios.get(`/api/user`, {
+        const resp = await axios.get(`${baseUrl}/user`, {
             headers: { Authorization: `Bearer ${token}` }
         })
         updateCurrentUser(resp.data)
@@ -54,7 +54,7 @@ export default function Dashboard({ user }: { user: null | IUser }) {
     //         if (resp.data.isPasswordCorrect) {
     //             const userId = user ? user.id : null;
     //             if (userId) {
-    //                 const response = await axios.put(`/api/user/${userId}`, { password: newPassword }, {
+    //                 const response = await axios.put(`${baseUrl}/user/${userId}`, { password: newPassword }, {
     //                     headers: { Authorization: `Bearer ${token}` }
     //                 })
     //                 setLastPasswordChange(new Date(response.data.lastPasswordChange));

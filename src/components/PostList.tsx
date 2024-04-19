@@ -4,14 +4,14 @@ import Post from "./Post"
 import { IPost } from "../interfaces/post"
 import Footer from "./Footer"
 import { IUser } from "../interfaces/user"
-// import { baseUrl } from "../config";
+import { baseUrl } from "../config";
 
 type Posts = null | Array<IPost>
 function postList({ user }: { user: null | IUser }) {
     const [posts, setPosts] = React.useState<Posts>(null)
     React.useEffect(() => {
         async function fetchPosts() {
-            const resp = await fetch(`/api/posts`)
+            const resp = await fetch(`${baseUrl}/posts`)
             const data = await resp.json()
             setPosts(data)
         }

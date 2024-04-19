@@ -1,10 +1,8 @@
 import { SyntheticEvent, useState } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
-import Footer from "./Footer"
 import { format } from 'date-fns';
-import cloudinary from 'cloudinary';
-// import { baseUrl } from "../config";
+import { baseUrl } from "../config";
 
 export default function Post() {
 
@@ -36,7 +34,7 @@ export default function Post() {
         try {
             e.preventDefault()
             const token = localStorage.getItem('token')
-            const resp = await axios.post(`/api/posts`, formData, {
+            const resp = await axios.post(`${baseUrl}/posts`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

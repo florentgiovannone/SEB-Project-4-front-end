@@ -3,12 +3,10 @@ import { useParams, useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { IPost } from "../interfaces/post"
 import { IUser } from "../interfaces/user"
-import { ILike } from "../interfaces/like"
 import axios from "axios"
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import Comment from "./Comment"
-
+import { baseUrl } from "../config";
 
 
 function PostCardFull({ title, content, code, image, user, id, category, post_date, like, comment }: IPost) {
@@ -20,7 +18,7 @@ function PostCardFull({ title, content, code, image, user, id, category, post_da
 
   React.useEffect(() => {
     async function fetchposts() {
-      const resp = await fetch(`/api/posts/${id}`)
+      const resp = await fetch(`${baseUrl}/posts/${id}`)
       const postsData = await resp.json()
       updateposts(postsData)
     }
@@ -29,7 +27,7 @@ function PostCardFull({ title, content, code, image, user, id, category, post_da
 
   async function fetchUser() {
     const token = localStorage.getItem('token')
-    const resp = await axios.get(`/api/user`, {
+    const resp = await axios.get(`${baseUrl}/user`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     updateCurrentUser(resp.data)
@@ -43,7 +41,7 @@ function PostCardFull({ title, content, code, image, user, id, category, post_da
   async function deletePost(e: SyntheticEvent) {
     try {
       const token = localStorage.getItem('token')
-      const resp = await axios.delete(`/api/posts/${post?.id}`, {
+      const resp = await axios.delete(`${baseUrl}/posts/${post?.id}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       location.reload()
@@ -62,7 +60,7 @@ function PostCardFull({ title, content, code, image, user, id, category, post_da
   async function handleLike(e: SyntheticEvent) {
     try {
       const token = localStorage.getItem('token')
-      const resp = await axios.post(`/api/posts/${id}/likes`, formData, {
+      const resp = await axios.post(`${baseUrl}/posts/${id}/likes`, formData, {
         headers: { Authorization: `Bearer ${token}` }
       })
       if (resp.data.message) {
@@ -79,7 +77,7 @@ function PostCardFull({ title, content, code, image, user, id, category, post_da
       like.filter(async like => {
         if (like.user.id === currentUser?.id) {
           const token = localStorage.getItem('token')
-          const resp = await axios.delete(`/api/likes/${like.id}`, {
+          const resp = await axios.delete(`${baseUrl}/likes/${like.id}`, {
             headers: { Authorization: `Bearer ${token}` }
           })
         }
@@ -107,9 +105,9 @@ function PostCardFull({ title, content, code, image, user, id, category, post_da
 
   return <> <section className="section m-3 p-0 is-centered" >
 
-    <div className="card" style={{ width: 400 }}>
-      <Link to={`/posts/${id}`}>
-      <div className="columns mt-6 mb-6">
+    <div className="card" style={{ width: 370 }}>
+
+      <div className="columns pt-2 pb-5">
           <div className="media-left ml-6">
             <figure className="image is-96x96">
               <img
@@ -122,7 +120,6 @@ function PostCardFull({ title, content, code, image, user, id, category, post_da
           <div className="column ">
             <p className="title is-4">{`${user.username} is feeling ${category}`}</p>
             <p className=" is-4">{`Posted the ${post_date}`}</p>
-            <p className="  has-text-black is-4">{`${like.length} Likes | ${comment.length} Comments`}</p>
             {/* <p className="subtitle is-6">{`${user.firstname}`}</p>
             <p className="subtitle is-6">{`${user.lastname}`}</p> */}
           </div>
@@ -137,14 +134,17 @@ function PostCardFull({ title, content, code, image, user, id, category, post_da
           />
         </figure>
       </div>}
-    </Link>
+
         <div className="card-footer">
         {currentUser && (liked !== "liked") && <button onClick={handleLike} className="card-footer-item">like</button>}
           {currentUser && (liked === "liked") && <button onClick={handleDislike} className="card-footer-item">dislike</button>}
         {post && currentUser && (currentUser.id === post.user.id) && <button onClick={deletePost} className="card-footer-item">Delete Post</button>}
         {post && currentUser && (currentUser.id === post.user.id) && <a className="card-footer-item" href={`/update/${id}`}><button>Edit Post</button></a>}
         </div>
-      <div className="card-content ml-3">
+    <Link to={`/posts/${id}`}>
+      <p className="  has-text-black is-4 ml-4">{`${like.length} Likes | ${comment.length} Comments`}</p>
+      </Link>
+      <div className="card-content ml-4 p-0">
             <div className="block title">
               {title}
             </div>

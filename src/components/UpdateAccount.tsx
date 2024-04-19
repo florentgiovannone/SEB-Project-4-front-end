@@ -3,7 +3,8 @@ import axios from "axios"
 import { useNavigate, useParams } from "react-router-dom"
 import Footer from "./Footer"
 import { IUser } from "../interfaces/user"
-// import { baseUrl } from "../config";
+import { baseUrl } from "../config";
+
 export default function updateAccount({ user }: { user: null | IUser }) {
 
     const { userId } = useParams()
@@ -12,7 +13,7 @@ export default function updateAccount({ user }: { user: null | IUser }) {
 
     React.useEffect(() => {
         async function fetchUser() {
-            const resp = await fetch(`/api/users/${userId}`)
+            const resp = await fetch(`${baseUrl}/users/${userId}`)
             const usersData = await resp.json()
             setFormData(usersData)
         }
@@ -41,7 +42,7 @@ export default function updateAccount({ user }: { user: null | IUser }) {
         const token = localStorage.getItem('token')
         const newFormData = structuredClone(formData)
 
-        const resp = await axios.put(`/api/users/${userId}`, formData, {
+        const resp = await axios.put(`${baseUrl}/users/${userId}`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

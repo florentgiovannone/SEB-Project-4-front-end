@@ -70,14 +70,6 @@ function Navbar({ user, setUser }: NavbarProps) {
                     >
                         Stream
                     </Link>
-                    {user && (
-                        <Link
-                            to="/post"
-                            className="navbar-item is-size-6 has-text-weight-semibold py-4" // Increase font size and padding
-                        >
-                            Post on stream
-                        </Link>
-                    )}
                 </div>
 
                 <div className="navbar-end">
