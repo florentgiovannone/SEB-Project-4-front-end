@@ -53,7 +53,7 @@ function postList({ user }: { user: null | IUser }) {
 
                 </div>}
                     <div className="columns is-multiline is-centered mb-6">
-                    {filterPosts()?.map((post) => {
+                        {filterPosts()?.sort((a: any, b: any) => b.post_date - a.post_date).map((post) => {
                         return <PostCardFull
                                 key={post.id}
                                 {...post}
