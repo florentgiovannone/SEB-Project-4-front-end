@@ -32,7 +32,7 @@ function postList() {
         }
         fetchPosts()
     }, [])
-    console.log(posts);
+    console.log(currentUser);
     
 
     const [search, setSearch] = React.useState("");
@@ -73,7 +73,7 @@ function postList() {
                 </div>}
 
             </div>
-                <div className="container">
+            <div className="columns is-multiline is-centered mb-6">
                     {filterPosts()?.map((post) => {
                         if (currentUser?.id === post.user.id) {
                         return <PostCardFull

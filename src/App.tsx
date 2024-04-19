@@ -18,6 +18,7 @@ import UserPosts from "./components/UserPosts"
 import ShowPost from "./components/ShowPost"
 import UpdatePost from "./components/UpdatePost"    
 import UpdateComment from "./components/UpdateComment"
+import UpdateAvatar from "./components/UpdateAvatar"
 // import { baseUrl } from "./config";
 
 function App() {
@@ -36,6 +37,8 @@ function App() {
     })
     setUser(resp.data)
   }
+  console.log(user);
+  
 
 return (
   <Router>
@@ -44,19 +47,20 @@ return (
       <Route path="/" element={<Home user={user} setUser={setUser} />} />
       <Route path="/aboutus" element={<AboutUs />} />
       <Route path="/contactus" element={<ContactUs />} />
-      <Route path="/stream" element={<PostList />} />
+      <Route path="/stream" element={<PostList user = { user } />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login fetchUser={fetchUser} />} />
       <Route path="/mystream" element={<Mystream />} />
       <Route path="/user" element={<UserList />} />
-      <Route path="/updateaccount/:userId" element={<UpdateAccount user={user} />} />
+      <Route path="/updateaccount/:userId" element={<UpdateAccount  user = { user }/>} />
       <Route path="/dashboard" element={<Dashboard user={user} />} />
-      <Route path="/post" element={<Post />} />
+      <Route path="/post" element={<Post  />} />
       <Route path="/account/:userId" element={<UserDashboard />} />
       <Route path="/post/:userId" element={<UserPosts />} />
       <Route path="/posts/:postId" element={<ShowPost user={user} />} />
       <Route path="/update/:postId" element={<UpdatePost user={user} />} />
       <Route path="/updateComment/:commentId" element={<UpdateComment user={user} />} />
+      <Route path="/updateAvatar/:userId" element={<UpdateAvatar user={user} />} />
     </Routes>
   </Router>
 )

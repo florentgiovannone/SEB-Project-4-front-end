@@ -7,10 +7,11 @@ import { ILike } from "../interfaces/like"
 import axios from "axios"
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import Comment from "./Comment"
 
 
 
-function PostCardFull({ title, content, code, image, user, id, category, date, like, comment }: IPost) {
+function PostCardFull({ title, content, code, image, user, id, category, post_date, like, comment }: IPost) {
   const [post, updateposts] = React.useState<IPost | null>(null);
   const [currentUser, updateCurrentUser] = useState<IUser | null>(null);
   const { postId } = useParams()
@@ -94,11 +95,19 @@ function PostCardFull({ title, content, code, image, user, id, category, date, l
   })
   const [errorData, setErrorData] = useState("")
   
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  function handleOpenModal() {
+    setIsModalOpen(true);
+  }
 
-  return <> <section className="section">
+  function handleCloseModal() {
+    setIsModalOpen(false);
+  }
 
-    <div className="card">
+  return <> <section className="section m-3 p-0 is-centered" >
+
+    <div className="card" style={{ width: 400 }}>
       <Link to={`/posts/${id}`}>
       <div className="columns mt-6 mb-6">
           <div className="media-left ml-6">
@@ -112,7 +121,8 @@ function PostCardFull({ title, content, code, image, user, id, category, date, l
           </div>
           <div className="column ">
             <p className="title is-4">{`${user.username} is feeling ${category}`}</p>
-            <p className="  has-text-white is-4">{`${like.length} Likes | ${comment.length} Comments`}</p>
+            <p className=" is-4">{`Posted the ${post_date}`}</p>
+            <p className="  has-text-black is-4">{`${like.length} Likes | ${comment.length} Comments`}</p>
             {/* <p className="subtitle is-6">{`${user.firstname}`}</p>
             <p className="subtitle is-6">{`${user.lastname}`}</p> */}
           </div>
@@ -129,8 +139,8 @@ function PostCardFull({ title, content, code, image, user, id, category, date, l
       </div>}
     </Link>
         <div className="card-footer">
-        {(liked !== "liked") && <button onClick={handleLike} className="card-footer-item">like</button>}
-          {(liked === "liked") && <button onClick={handleDislike} className="card-footer-item">dislike</button>}
+        {currentUser && (liked !== "liked") && <button onClick={handleLike} className="card-footer-item">like</button>}
+          {currentUser && (liked === "liked") && <button onClick={handleDislike} className="card-footer-item">dislike</button>}
         {post && currentUser && (currentUser.id === post.user.id) && <button onClick={deletePost} className="card-footer-item">Delete Post</button>}
         {post && currentUser && (currentUser.id === post.user.id) && <a className="card-footer-item" href={`/update/${id}`}><button>Edit Post</button></a>}
         </div>
@@ -148,9 +158,7 @@ function PostCardFull({ title, content, code, image, user, id, category, date, l
             }
           </div>
         </div>
-
     </div>
-
   </section>
   </>
 }

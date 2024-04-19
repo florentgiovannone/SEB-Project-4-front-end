@@ -24,7 +24,6 @@ export default function updateAccount({ user }: { user: null | IUser }) {
         firstname: "",
         lastname: "",
         username: "",
-        image: "",
         password: "",
         passwordConfirmation: ""
     }
@@ -42,7 +41,7 @@ export default function updateAccount({ user }: { user: null | IUser }) {
         const token = localStorage.getItem('token')
         const newFormData = structuredClone(formData)
 
-        const resp = await axios.put(`api/users/${userId}`, formData, {
+        const resp = await axios.put(`/api/users/${userId}`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -58,7 +57,6 @@ export default function updateAccount({ user }: { user: null | IUser }) {
         <div className="container">
             <form >
                 <div className="field  mt-4">
-                    <label className="label">Username <span className="has-text-danger">*</span></label>
                     <div className="control">
                         <input
                             className="input border-is-rouge"
@@ -71,7 +69,6 @@ export default function updateAccount({ user }: { user: null | IUser }) {
                     </div>
                 </div>
                 <div className="field  mt-4">
-                    <label className="label">Firstname <span className="has-text-danger">*</span></label>
                     <div className="control">
                         <input
                             className="input border-is-rouge"
@@ -84,7 +81,6 @@ export default function updateAccount({ user }: { user: null | IUser }) {
                     </div>
                 </div>
                 <div className="field  mt-4">
-                    <label className="label">Lastname <span className="has-text-danger">*</span></label>
                     <div className="control">
                         <input
                             className="input border-is-rouge"
@@ -97,7 +93,6 @@ export default function updateAccount({ user }: { user: null | IUser }) {
                     </div>
                 </div>
                 <div className="field  mt-4">
-                    <label className="label">Email <span className="has-text-danger">*</span></label>
                     <div className="control">
                         <input
                             className="input border-is-rouge"
@@ -106,19 +101,6 @@ export default function updateAccount({ user }: { user: null | IUser }) {
                             name={'email'}
                             onChange={handleChange}
                             value={formData.email}
-                        />
-                    </div>
-                </div>
-                <div className="field  mt-4">
-                    <label className="label">Avatar <span className="has-text-danger">*</span></label>
-                    <div className="control">
-                        <input
-                            className="input border-is-rouge"
-                            placeholder="http image link"
-                            type="text"
-                            name={'image'}
-                            onChange={handleChange}
-                            value={formData.image}
                         />
                     </div>
                 </div>

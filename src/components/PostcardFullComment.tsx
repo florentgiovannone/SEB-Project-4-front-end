@@ -6,8 +6,10 @@ import { IUser } from "../interfaces/user"
 import axios from "axios"
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { format } from "date-fns"
 
-function PostCardFullComment({ title, content, code, image, user, id, category, like, comment }: IPost) {
+
+function PostCardFullComment({ title, content, code, image, user, id, category, like, post_date, comment }: IPost) {
   const [post, updateposts] = React.useState<IPost | null>(null)
   const [currentUser, updateCurrentUser] = useState<IUser | null>(null);
   const { postId } = useParams()
@@ -85,9 +87,11 @@ function PostCardFullComment({ title, content, code, image, user, id, category, 
     } catch (error) {
     }
   }
-
+  const currentDate = format(new Date(), 'dd/MM/yyyy | kk:mm')
   const [formData, setFormData] = useState({
-    content: ""
+    content: "",
+    code:"",
+    comment_date: currentDate
   })
   const [errorData, setErrorData] = useState("")
 
@@ -130,6 +134,7 @@ function PostCardFullComment({ title, content, code, image, user, id, category, 
             </div>
             <div className="column ">
               <p className="title is-4">{`${user.username} is feeling ${category}`}</p>
+          <p className=" is-4">{`Posted the ${post_date}`}</p>
             <p className=" is-4">{`${like.length} Likes | ${comment.length} Comments`}</p>
               {/* <p className="subtitle is-6">{`${user.firstname}`}</p>
             <p className="subtitle is-6">{`${user.lastname}`}</p> */}
@@ -146,8 +151,8 @@ function PostCardFullComment({ title, content, code, image, user, id, category, 
             </figure>
           </div>}
         <div className="card-footer">
-          {(liked !== "liked") && <button onClick={handleLike} className="card-footer-item">like</button>}
-          {(liked === "liked") && <button onClick={handleDislike} className="card-footer-item">dislike</button>}
+          {currentUser && (liked !== "liked") && <button onClick={handleLike} className="card-footer-item">like</button>}
+          {currentUser && (liked === "liked") && <button onClick={handleDislike} className="card-footer-item">dislike</button>}
           {post && currentUser && (currentUser.id === post.user.id) && <button onClick={deletePost} className="card-footer-item">Delete Post</button>}
           {post && currentUser && (currentUser.id === post.user.id) && <a className="card-footer-item" href={`/update/${id}`}><button>Edit Post</button></a>}
         </div>
@@ -167,20 +172,33 @@ function PostCardFullComment({ title, content, code, image, user, id, category, 
             </div>
             
           </div>
+      {currentUser && <>
+        <footer className="card-footer">
 
-        </div>
-          {currentUser && <>
-          <footer className="card-footer">
-              <textarea 
+            <div className="column">
+              <textarea
                 className="textarea p-4"
                 name={'content'}
                 onChange={handleChange}
-                value={formData.content} 
-                placeholder="write your comment here"></textarea>
-          </footer>
-            <div className="button has-text-centered mt-4">
+                value={formData.content}
+                placeholder="Comment ..."></textarea>
+            </div>
+            <div className="column">
+              <textarea
+                className="textarea p-4"
+                name={'code'}
+                onChange={handleChange}
+                value={formData.code}
+                placeholder="<Code>"></textarea>
+            </div>
+
+        </footer>
+        <div className="container has-text-centered">
+            <div className="button  m-4">
           <button onClick={commentPost} className="card-footer-item is-centered ">Comment</button>
-            </div></>}
+            </div>
+        </div></>}
+            </div>
 
 
   </section>

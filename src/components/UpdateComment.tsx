@@ -56,7 +56,6 @@ export default function UpdateComment({ user }: { user: null | IUser }, {id }: I
         <div className="container">
             <form >
                 <div className="field mt-4">
-                    <label className="label">Content</label>
                     <div className="control">
                         <textarea
                             className="input border-is-rouge"

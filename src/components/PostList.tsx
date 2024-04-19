@@ -1,11 +1,13 @@
 import React from "react"
 import PostCardFull from "./PostcardFull"
+import Post from "./Post"
 import { IPost } from "../interfaces/post"
 import Footer from "./Footer"
+import { IUser } from "../interfaces/user"
 // import { baseUrl } from "../config";
 
 type Posts = null | Array<IPost>
-function postList() {
+function postList({ user }: { user: null | IUser }) {
     const [posts, setPosts] = React.useState<Posts>(null)
     React.useEffect(() => {
         async function fetchPosts() {
@@ -15,6 +17,8 @@ function postList() {
         }
         fetchPosts()
     }, [])
+    console.log(posts);
+    
 
     const [search, setSearch] = React.useState("");
 
@@ -33,30 +37,33 @@ function postList() {
     const filteredLength: any = filterPosts()?.length
 
     return (<>
-    <section className="container">
-
+        <section className="section p-0" >
+            <div className="columns is-centered ">
+                <div className="container m-0 p-0">
+            <Post  />
                 <input
-                    className="input background-is-rouge is-rounded mt-6"
+                    className="input background-is-rouge is-rounded mb-6 "
                     placeholder="Search character..."
                     onChange={handleChange}
                     value={search}
                 />
-                {filteredLength === 0 && <div className="account  has-text-centered background-is-grey mt-5">
+                {filteredLength === 0 && <div className="account  has-text-centered background-is-grey ">
                     <p className="text is-black ">Cannot find your post ?</p>
                     <a href="/create"><button className="button  mb-3">Create new Post</button></a>
 
                 </div>}
-
-                <div className="container">
+                    <div className="columns is-multiline is-centered mb-6">
                     {filterPosts()?.map((post) => {
                         return <PostCardFull
                                 key={post.id}
                                 {...post}
                             />
                     })}
+                    
                 </div>
-
-
+                
+                </div>
+            </div>
     </section>
 
         <Footer />

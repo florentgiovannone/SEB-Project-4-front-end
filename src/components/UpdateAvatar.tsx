@@ -4,34 +4,26 @@ import { useNavigate, useParams } from "react-router-dom"
 import Footer from "./Footer"
 import { IUser } from "../interfaces/user"
 // import { baseUrl } from "../config";
+export default function updateAvatar({ user }: { user: null | IUser }) {
 
-
-export default function UpdatePost({ user }: { user: null | IUser }) {
-    const { postId } = useParams()
+    const { userId } = useParams()
     const navigate = useNavigate()
 
+
     React.useEffect(() => {
-        console.log("The post Page has mounted")
+        async function fetchUser() {
+            const resp = await fetch(`/api/users/${userId}`)
+            const usersData = await resp.json()
+            setFormData(usersData)
+        }
+        fetchUser()
     }, [])
 
     const [formData, setFormData] = useState({
-        title: "",
-        content: "",
-        code: "",
-        category: "",
         image: ""
     }
     )
-    React.useEffect(() => {
-        async function fetchPosts() {
-            const resp = await fetch(`/api/posts/${postId}`)
-            const postsData = await resp.json()
-            setFormData(postsData)
-        }
-        fetchPosts()
-    }, [])
-    console.log(postId);
-    
+
     function handleChange(e: any) {
         const fieldName = e.target.name
         const newFormData = structuredClone(formData)
@@ -44,13 +36,14 @@ export default function UpdatePost({ user }: { user: null | IUser }) {
         const token = localStorage.getItem('token')
         const newFormData = structuredClone(formData)
 
-        const resp = await axios.put(`/api/posts/${postId}`, formData, {
+        const resp = await axios.put(`/api/users/${userId}`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         })
         console.log(resp.data)
-        navigate(`/posts/${postId}`)
+        navigate(`/dashboard`)
+        window.location.reload();
     }
     console.log(formData)
     function handleUpload() {
@@ -77,60 +70,8 @@ export default function UpdatePost({ user }: { user: null | IUser }) {
             .open();
     }
 
-      
     return <> <div className="section">
         <div className="container">
-
-                <div className="field">
-                    <label className="label">Title</label>
-                    <div className="control">
-                        <input
-                            className="input border-is-rouge"
-                            placeholder="Title"
-                            type="text"
-                            name={'title'}
-                            onChange={handleChange}
-                            value={formData.title}
-                        />
-                    </div>
-                </div>
-                <div className="field mt-4">
-                    <label className="label">Content</label>
-                    <div className="control">
-                        <textarea
-                            className="input border-is-rouge"
-                            placeholder="Content"
-                            name={'content'}
-                            onChange={handleChange}
-                            value={formData.content}
-                        />
-                    </div>
-                </div>
-                <div className="field mt-4">
-                    <label className="label">Code</label>
-                    <div className="control">
-                        <textarea
-                            className="input border-is-rouge"
-                            placeholder="Code"
-                            name={'code'}
-                            onChange={handleChange}
-                            value={formData.code}
-                        />
-                    </div>
-                </div>
-                <div className="field mt-4">
-                    <label className="label">Category</label>
-                    <div className="control">
-                        <input
-                            className="input border-is-rouge"
-                            placeholder="Category"
-                            type="text"
-                            name={'category'}
-                            onChange={handleChange}
-                            value={formData.category}
-                        />
-                    </div>
-                </div>
                 <div className="field  mt-4">
                     <div>
                         <div className="container">
@@ -148,7 +89,6 @@ export default function UpdatePost({ user }: { user: null | IUser }) {
 
                     </div>
                 </div>
-            
                 <div>{user && <button onClick={handleSubmit} className="button m-6  border-is-rouge">Update</button>}</div>
         </div>
 
