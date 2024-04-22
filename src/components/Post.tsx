@@ -94,7 +94,7 @@ export default function Post() {
         </div>
         {isModalOpen && (<div className="modal is-active">
             <div className="modal-background" ></div>
-            <div className="modal-content" style={{ width: 1200 }}>
+            <div className="modal-content" style={{ width: 1400 }}>
                 <div className="container is-fullwidth" >
                         <div className="columns">
 
