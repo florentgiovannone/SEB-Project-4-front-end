@@ -7,6 +7,7 @@ import axios from "axios"
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { baseUrl } from "../config";
+import { isPast } from "date-fns"
 
 
 function PostCardFull({ title, content, code, image, user, id, category, post_date, like, comment }: IPost) {
@@ -15,6 +16,7 @@ function PostCardFull({ title, content, code, image, user, id, category, post_da
   const { postId } = useParams()
   const navigate = useNavigate()
   let liked = ""
+console.log();
 
   React.useEffect(() => {
     async function fetchposts() {
@@ -41,7 +43,7 @@ function PostCardFull({ title, content, code, image, user, id, category, post_da
   async function deletePost(e: SyntheticEvent) {
     try {
       const token = localStorage.getItem('token')
-      const resp = await axios.delete(`${baseUrl}/posts/${post?.id}`, {
+      const resp = await axios.delete(`${baseUrl}/posts/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       location.reload()
@@ -57,6 +59,8 @@ function PostCardFull({ title, content, code, image, user, id, category, post_da
     })
   }
   checkIfLiked()
+
+
   async function handleLike(e: SyntheticEvent) {
     try {
       const token = localStorage.getItem('token')

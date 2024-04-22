@@ -19,7 +19,7 @@ import ShowPost from "./components/ShowPost"
 import UpdatePost from "./components/UpdatePost"    
 import UpdateComment from "./components/UpdateComment"
 import UpdateAvatar from "./components/UpdateAvatar"
-// import { baseUrl } from "./config";
+import { baseUrl } from "./config";
 
 declare global {
   interface Window { cloudinary: any; }
@@ -36,8 +36,7 @@ function App() {
 
   async function fetchUser() {
     const token = localStorage.getItem('token')
-    const resp = await axios.get(`/api/user`, {
-    // const resp = await axios.get(`${baseUrl}/user`, {
+    const resp = await axios.get(`${baseUrl}/user`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     setUser(resp.data)

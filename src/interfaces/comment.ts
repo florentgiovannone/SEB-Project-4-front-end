@@ -1,9 +1,11 @@
 import { IUser } from "./user";
-
+import { IPost } from "./post";
 export interface IComment {
     id: string,
-    content: string,
+    content: string
     code: string
-    user: IUser
     comment_date: string
+    post: IPost
+    user: IUser
+
 }

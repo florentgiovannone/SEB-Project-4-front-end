@@ -15,7 +15,9 @@ function postList() {
         const token = localStorage.getItem('token')
         const resp = await axios.get(`${baseUrl}/user`, {
             headers: { Authorization: `Bearer ${token}` }
+
         })
+        console.log(token)
         updateCurrentUser(resp.data)
     }
 
@@ -33,7 +35,7 @@ function postList() {
         fetchPosts()
     }, [])
     console.log(currentUser);
-    
+
 
     const [search, setSearch] = React.useState("");
 
@@ -52,9 +54,9 @@ function postList() {
     const filteredLength: any = filterPosts()?.length
 
     return (<>
-    <section className="section">
-        <div className="container has-text-centered">
-            <h1 className="title has-text-centered is-rouge mt-6">My Stream</h1>
+        <section className="section">
+            <div className="container has-text-centered">
+                <h1 className="title has-text-centered is-rouge mt-6">My Stream</h1>
 
                 <div className="columns has-text-centered is-centered is-multiline mt-5">
                     <a href={`/dashboard`}><button className="button is-outlined is-primary m-2">See Account</button></a>
@@ -74,19 +76,19 @@ function postList() {
 
             </div>
             <div className="columns is-multiline is-centered mb-6">
-                    {filterPosts()?.map((post) => {
-                        if (currentUser?.id === post.user.id) {
+                {filterPosts()?.map((post) => {
+                    if (currentUser?.id === post.user.id) {
                         return <PostCardFull
-                                key={post.id}
-                                {...post}
-                            />
+                            key={post.id}
+                            {...post}
+                        />
                     }
-                    
-                    })}
-                </div>
+
+                })}
+            </div>
 
 
-    </section>
+        </section>
 
         <Footer />
     </>)

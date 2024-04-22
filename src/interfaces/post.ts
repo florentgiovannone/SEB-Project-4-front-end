@@ -3,7 +3,6 @@ import { IComment } from "./comment"
 import { ILike } from "./like"
 
 export interface IPost {
-    date: string | number | Date;
     id: string,
     title: string,
     content: string,
@@ -14,5 +13,5 @@ export interface IPost {
     user: IUser
     post_date: string
     comment: Array <IComment>
-    like: Array<ILike>
+    like: Array <ILike>
 }

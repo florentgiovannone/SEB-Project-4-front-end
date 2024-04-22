@@ -5,8 +5,6 @@ import { useEffect, useState } from "react"
 import axios from "axios";
 import { baseUrl } from "../config";
 
-type Wines = null | Array<IPost>
-
 export default function Dashboard({ user }: { user: null | IUser }) {
     console.log(user?.id);
     
@@ -27,10 +25,6 @@ export default function Dashboard({ user }: { user: null | IUser }) {
         setIsModalOpen(false);
     }
 
-    useEffect(() => {
-        const token = localStorage.getItem('token')
-        if (token) fetchUser()
-    }, [])
 
     async function fetchUser() {
         const token = localStorage.getItem('token')
@@ -39,6 +33,12 @@ export default function Dashboard({ user }: { user: null | IUser }) {
         })
         updateCurrentUser(resp.data)
     }
+
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+        if (token) fetchUser()
+    }, [])
+
 
     // async function handleChangePassword() {
     //     try {
