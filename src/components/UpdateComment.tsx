@@ -58,7 +58,7 @@ export default function UpdateComment({ user }: { user: null | IUser }, {id }: I
                 <div className="field mt-4">
                     <div className="control">
                         <textarea
-                            className="input border-is-rouge"
+                            className="input has-border-green "
                             placeholder="Content"
                             name={'content'}
                             onChange={handleChange}
@@ -66,7 +66,7 @@ export default function UpdateComment({ user }: { user: null | IUser }, {id }: I
                         />
                     </div>
                 </div>
-                <div>{user && <button onClick={handleSubmit} className="button m-6  border-is-rouge">Update</button>}</div>
+                <div>{user && <button onClick={handleSubmit} className="button m-6  has-border-green ">Update</button>}</div>
             </form>
         </div>
 

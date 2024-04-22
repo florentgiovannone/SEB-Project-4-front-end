@@ -45,18 +45,19 @@ function Comment({ content, code, user, id, comment_date }: IComment) {
 
 
 
-  return <> <section className="section">
-    <div className="box">
-      <article className="media">
-        <div className="media-left">
-          <figure className="image is-64x64">
-            <img src={user.image} />
+  return <> <section className="section p-2">
+    <div className="box m-0 p-0">
+      <div className="media has-background-black">
+        <div className="media-left ">
+          <figure className="image is-64x64 m-4">
+            <img src={user.image} className="is-rounded has-border-green"/>
           </figure>
         </div>
-        <div className="media-content">
-          <div className="content">
-              <strong>{user.username}</strong> <small>{`   Posted the ${comment_date}`}</small>
-              <div className="block subtitle">
+        <div className="media-content has-text-green">
+          <div className="content m-4 has-text-green">
+            <p className="has-text-green m-0">{user.username}</p> 
+            <p className="has-text-white">{`   Posted the ${comment_date}`}</p>
+            <div className="block subtitle has-text-white ">
                 {content && `${content}`}
               </div>
               <br />
@@ -66,7 +67,6 @@ function Comment({ content, code, user, id, comment_date }: IComment) {
                 }
               </div>
           </div>
-          <nav className="level is-mobile">
             <div className="level-left">
               <a className="level-item" aria-label="reply">
                 <span className="icon is-small">
@@ -84,12 +84,12 @@ function Comment({ content, code, user, id, comment_date }: IComment) {
                 </span>
               </a>
             </div>
-          </nav>
+
         </div>
-      </article>
+      </div>
       <footer className="card-footer">
-        {user && currentUser && (currentUser.id === user.id) && <button onClick={deletePost} className="card-footer-item">Delete Comment</button>}
-        {user && currentUser && (currentUser.id === user.id) && <a className="card-footer-item" href={`/updateComment/${id}`}><button>Edit Comment</button></a>}
+        {user && currentUser && (currentUser.id === user.id) && <button onClick={deletePost} className="card-footer-item has-text-grey my-4">Delete Comment</button>}
+        {user && currentUser && (currentUser.id === user.id) && <a className="card-footer-item has-text-grey" href={`/updateComment/${id}`}><button>Edit Comment</button></a>}
       </footer>
     </div>
   </section>

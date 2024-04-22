@@ -60,7 +60,7 @@ export default function updateAccount({ user }: { user: null | IUser }) {
                 <div className="field  mt-4">
                     <div className="control">
                         <input
-                            className="input border-is-rouge"
+                            className="input has-border-green "
                             placeholder="Username"
                             type="text"
                             name={'username'}
@@ -72,7 +72,7 @@ export default function updateAccount({ user }: { user: null | IUser }) {
                 <div className="field  mt-4">
                     <div className="control">
                         <input
-                            className="input border-is-rouge"
+                            className="input has-border-green "
                             placeholder="Firstname"
                             type="text"
                             name={'firstname'}
@@ -84,7 +84,7 @@ export default function updateAccount({ user }: { user: null | IUser }) {
                 <div className="field  mt-4">
                     <div className="control">
                         <input
-                            className="input border-is-rouge"
+                            className="input has-border-green "
                             placeholder="Lastname"
                             type="text"
                             name={'lastname'}
@@ -96,7 +96,7 @@ export default function updateAccount({ user }: { user: null | IUser }) {
                 <div className="field  mt-4">
                     <div className="control">
                         <input
-                            className="input border-is-rouge"
+                            className="input has-border-green "
                             placeholder="Email"
                             type="text"
                             name={'email'}
@@ -105,7 +105,7 @@ export default function updateAccount({ user }: { user: null | IUser }) {
                         />
                     </div>
                 </div>
-                <div>{user && <button onClick={handleSubmit} className="button m-6  border-is-rouge">Update</button>}</div>
+                <div>{user && <button onClick={handleSubmit} className="button m-6  has-border-green ">Update</button>}</div>
             </form>
         </div>
 

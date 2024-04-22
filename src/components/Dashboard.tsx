@@ -7,7 +7,7 @@ import { baseUrl } from "../config";
 
 export default function Dashboard({ user }: { user: null | IUser }) {
     console.log(user?.id);
-    
+
     const [currentUser, updateCurrentUser] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [oldPassword, setOldPassword] = useState('');
@@ -73,32 +73,40 @@ export default function Dashboard({ user }: { user: null | IUser }) {
     // }
     return (
         <>
-            <h1 className="title has-text-centered is-rouge mt-6">My Dashboard</h1>
+
             <section className="section">
                 <div className=" container has-text-centered is-widescreen">
-                    <div className="account column is-rounded background-is-grey is-centered m-6">
+                    <div className="account column   is-centered m-6">
                         <h5 className="title has-text-black has-text-centered mb-6">My Account</h5>
                         <div className="image-figure mb-4">
                             {/* This div represents the card */}
-                            <div className="card-image is-squared has-text-centered">
+                            <div className="card-image has-text-centered">
                                 {/* This div represents the image container within the card */}
-                                <figure className="image is-square is-128x128 is-centered">
-                                    {/* This figure element contains the image */}
-                                {!user?.image && <img src="https://cdn.pixabay.com/photo/2017/02/23/13/05/avatar-2092113_1280.png" alt="Placeholder image" />}
-                                {user?.image && <img src={user.image} alt="Placeholder image" />}
 
-                                </figure>
+                                {/* This figure element contains the image */}
+                                {!user?.image &&
+                                    <figure className="image is-128x128 is-centered">
+                                        <img alt="Placeholder"  src="https://cdn.pixabay.com/photo/2017/02/23/13/05/avatar-2092113_1280.png" />
+                                    </figure>}
+
+
+
+                                {user?.image && <figure className="image is-square is-128x128 ">
+                                    <img src={user.image} alt="Placeholder image"  />
+                                </figure>}
+
                             </div>
                         </div>
-                        <a href={`/updateAvatar/${user?.id}`}><button className="button is-outlined background-is-rouge m-4 is-primary mt-4">Update avatar</button></a>
+                        <a href={`/updateAvatar/${user?.id}`}><button className="button is-outlined background-is-rouge m-4 ">Update avatar</button></a>
+                        <a href={`/updateaccount/${user?.id}`}><button className="button is-outlined background-is-rouge m-4 ">Update account</button></a>
+                        <a href="/user"><button className="button is-outlined background-is-rouge m-4">Search other users</button></a>
                         <div className="container">
-                        <p className="is-rouge has-text-weight-semibold has-text-centered mb-3"><span className="title has-text-black is-rouge is-4">{`Firstname:`}</span> {user?.firstname}</p>
-                        <p className="is-rouge has-text-weight-semibold has-text-centered mb-3"><span className="title has-text-black is-rouge is-4">{`Lastname:`}</span> {user?.lastname}</p>
-                        <p className="is-rouge has-text-weight-semibold has-text-centered mb-3"><span className="title has-text-black is-rouge is-4">{`Username:`}</span> {user?.username}</p>
-                        <p className="is-rouge has-text-weight-semibold has-text-centered mb-3"><span className="title has-text-black is-rouge is-4">{`Email:`}</span> {user?.email}</p>
-                        <p className="is-rouge has-text-weight-semibold has-text-centered mb-3"><span className="title has-text-black is-rouge is-4">{`Last password changed: `}</span> {lastPasswordChange ? lastPasswordChange.toLocaleDateString() : 'Not available'}</p>
+                            <p className=" has-text-weight-semibold has-text-centered mb-3"><span className="title has-text-green  is-4">{`Firstname:`}</span> {user?.firstname}</p>
+                            <p className=" has-text-weight-semibold has-text-centered mb-3"><span className="title has-text-green  is-4">{`Lastname:`}</span> {user?.lastname}</p>
+                            <p className=" has-text-weight-semibold has-text-centered mb-3"><span className="title has-text-green  is-4">{`Username:`}</span> {user?.username}</p>
+                            <p className=" has-text-weight-semibold has-text-centered mb-3"><span className="title has-text-green  is-4">{`Email:`}</span> {user?.email}</p>
+                            <p className=" has-text-weight-semibold has-text-centered mb-3"><span className="title has-text-green is-rouge is-4">{`Last password changed: `}</span> {lastPasswordChange ? lastPasswordChange.toLocaleDateString() : 'Not available'}</p>
                         </div>
-                        <a href={`/updateaccount/${user?.id}`}><button className="button is-outlined background-is-rouge m-4 is-primary mt-4">Update account</button></a>
                         {/* <button className="button is-outlined background-is-rouge m-4 is-primary mt-4" onClick={handleOpenModal}>
                             Change Password
                         </button> */}
@@ -125,7 +133,6 @@ export default function Dashboard({ user }: { user: null | IUser }) {
                         )}
                     </div>
                     <div className="columns has-text-centered is-centered is-multiline">
-                        <a href="/user"><button className="button  border-is-rouge">Search users</button></a>
                     </div>
                 </div>
             </section>

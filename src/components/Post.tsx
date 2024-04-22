@@ -15,6 +15,7 @@ export default function Post() {
         content: "",
         code: "",
         category: "",
+        categoryContent: "",
         image: "",
         post_date: currentDate
     }
@@ -93,25 +94,26 @@ export default function Post() {
         </div>
         {isModalOpen && (<div className="modal is-active">
             <div className="modal-background" ></div>
-            <div className="modal-content" style={{ width: 1000 }}>
-                <div className="container" >
+            <div className="modal-content" style={{ width: 1200 }}>
+                <div className="container is-fullwidth" >
                         <div className="columns">
 
                             <div className="column">
 
                                 <div className="field ">
                                     <p className="control has-icons-left has-icons-right">
-                                        <input className="input"
+                                    <input className="input has-border-green "
                                             placeholder="Title"
                                             type="text"
                                             name={'title'}
                                             onChange={handleChange}
-                                            value={formData.title} />
+                                            value={formData.title} 
+                                            style={{height:105}}/>
                                     </p>
                                 </div>
                                 <div className="field mt-5">
                                     <p className="control has-icons-left">
-                                        <textarea className="input" style={{ height: 150 }}
+                                        <textarea className="input has-border-green  " style={{ height: 150 }}
                                             placeholder="Content"
                                             name={'content'}
                                             onChange={handleChange}
@@ -122,16 +124,33 @@ export default function Post() {
                             <div className="column">
                                 <div className="field ">
                                     <p className="control has-icons-left has-icons-right">
-                                        <input className="input" placeholder="Category"
-                                            type="text"
+                                    <select className="input has-border-green mb-5" placeholder="Category"
                                             name={'category'}
                                             onChange={handleChange}
-                                            value={formData.category} />
+                                            value={formData.category} >
+                                        <option value="" disabled selected>- Choose from the below -</option>
+                                        <option value="is feeling">Is feling ...</option>
+                                        <option value="need help with">Need help with ... </option>
+                                        <option value="is developing">Is developing ...</option>
+                                        <option value="is learning">Is learning.... </option>
+                                        <option value="is attending">Is attending ....</option>
+                                            </select>
+                                            
+                                    </p>
+                                </div>
+                                <div className="field ">
+                                    <p className="control has-icons-left has-icons-right">
+                                    <input className="input has-border-green "
+                                        placeholder="Category content"
+                                        type="text"
+                                        name={'categoryContent'}
+                                        onChange={handleChange}
+                                        value={formData.categoryContent} />
                                     </p>
                                 </div>
                                 <div className="field mt-5">
                                     <p className="control has-icons-left">
-                                        <textarea className="input" style={{ height: 150 }} placeholder="<Code>"
+                                    <textarea className="input has-border-green" style={{ height: 150 }} placeholder="<Code>"
                                             name={'code'}
                                             onChange={handleChange}
                                             value={formData.code} />
@@ -142,9 +161,9 @@ export default function Post() {
                         <div className="field  mt-4">
                             <div>
                                     <div className="container">
-                                        <button className="button" onClick={handleUpload}>Click to upload an image</button>
+                                        <button className="button mb-3" onClick={handleUpload}>Click to upload an image</button>
                                         <textarea
-                                            className="textarea is-primary"
+                                    className="textarea is-primary has-border-green"
                                             placeholder='Image URL'
                                             onChange={handleChange}
                                             name={'image'}
@@ -156,10 +175,10 @@ export default function Post() {
                                 
                             </div>
                         </div>
-                        <button className="mt-4 button border-is-rouge" onClick={handleSubmit}>Submit</button>
+                        <button className="my-4 button border-is-rouge" onClick={handleSubmit}>Submit</button>
                 </div>
             </div>
-            <button className="modal-close is-large is-white" onClick={handleCloseModal} aria-label="close">X</button>
+            <button className="modal-close has-text-green" onClick={handleCloseModal} aria-label="close">X</button>
         </div>)}
     </section></>
 }

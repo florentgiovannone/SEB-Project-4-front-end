@@ -43,7 +43,7 @@ function UserList() {
       <div className="container">
 
         <input
-          className="input background-is-rouge is-rounded mb-3"
+          className="input has-border-green  is-rounded mb-3"
           placeholder="Search character..."
           onChange={handleChange}
           value={search}

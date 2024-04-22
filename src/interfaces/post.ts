@@ -7,8 +7,8 @@ export interface IPost {
     title: string,
     content: string,
     image: string,
-    email: string,
     category: string,
+    categoryContent: string,
     code: string,
     user: IUser
     post_date: string

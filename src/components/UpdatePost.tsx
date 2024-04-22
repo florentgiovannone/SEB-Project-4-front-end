@@ -87,7 +87,7 @@ export default function UpdatePost({ user }: { user: null | IUser }) {
                     <label className="label">Title</label>
                     <div className="control">
                         <input
-                            className="input border-is-rouge"
+                            className="input has-border-green "
                             placeholder="Title"
                             type="text"
                             name={'title'}
@@ -100,7 +100,7 @@ export default function UpdatePost({ user }: { user: null | IUser }) {
                     <label className="label">Content</label>
                     <div className="control">
                         <textarea
-                            className="input border-is-rouge"
+                            className="input has-border-green "
                             placeholder="Content"
                             name={'content'}
                             onChange={handleChange}
@@ -112,7 +112,7 @@ export default function UpdatePost({ user }: { user: null | IUser }) {
                     <label className="label">Code</label>
                     <div className="control">
                         <textarea
-                            className="input border-is-rouge"
+                            className="input has-border-green "
                             placeholder="Code"
                             name={'code'}
                             onChange={handleChange}
@@ -124,7 +124,7 @@ export default function UpdatePost({ user }: { user: null | IUser }) {
                     <label className="label">Category</label>
                     <div className="control">
                         <input
-                            className="input border-is-rouge"
+                            className="input has-border-green "
                             placeholder="Category"
                             type="text"
                             name={'category'}
@@ -136,7 +136,7 @@ export default function UpdatePost({ user }: { user: null | IUser }) {
                 <div className="field  mt-4">
                     <div>
                         <div className="container">
-                            <button className="button" onClick={handleUpload}>Click to upload an image</button>
+                            <button className="button mb-3" onClick={handleUpload}>Click to upload an image</button>
                             <textarea
                                 className="textarea is-primary"
                                 placeholder='Image URL'
@@ -151,7 +151,7 @@ export default function UpdatePost({ user }: { user: null | IUser }) {
                     </div>
                 </div>
             
-                <div>{user && <button onClick={handleSubmit} className="button m-6  border-is-rouge">Update</button>}</div>
+                <div>{user && <button onClick={handleSubmit} className="button mt-3  has-border-green ">Update</button>}</div>
         </div>
 
     </div>

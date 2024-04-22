@@ -84,40 +84,40 @@ function XIcon(props: any) {
 function Footer() {
   return (
     <>
-      <footer className="footer pb-6 pt-0" >
-        <div className="content has-text-black has-text-centered">
+      <footer className="footer  p-0" >
+        <div className="content has-background-black has-text-centered">
           <div className="level m-0 p-0">
             <div className="level-left">
-              <Link to="/" className="mx-6 has-text-black">
+              <Link to="/" className="mx-6 has-text-green">
                 Home
               </Link>
-              <Link to="/wines" className="mx-6 has-text-black">
+              <Link to="/wines" className="mx-6 has-text-green">
                 Winelist API
               </Link>
-              <Link to="/aboutus" className="mx-6 has-text-black">
+              <Link to="/aboutus" className="mx-6 has-text-green">
                 About Us
               </Link>
-              <Link to="/contactus" className="mx-6 has-text-black">
+              <Link to="/contactus" className="mx-6 has-text-green">
                 Contact Us
               </Link>
             </div>
-            <div className="level-right m-6 has-text-black">
+            <div className="level-right m-6 has-text-green">
               <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
-                <FacebookIcon className="has-text-black custom-icon" />
+                <FacebookIcon className="has-text-green custom-icon" />
               </a>
               <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer">
-                <XIcon className="has-text-black custom-icon" />
+                <XIcon className="has-text-green custom-icon" />
               </a>
               <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
-                <InstagramIcon className="has-text-black custom-icon" />
+                <InstagramIcon className="has-text-green custom-icon" />
               </a>
               <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
-                <LinkedinIcon className="has-text-black custom-icon" />
+                <LinkedinIcon className="has-text-green custom-icon" />
               </a>
             </div>
           </div>
         </div>
-        <div className="has-text-centered has-text-black">
+        <div className="has-text-centered has-background-black has-text-green">
           <div className="centered-container">
             <h3 className="pb-" >&copy; CodeStream</h3>
           </div>

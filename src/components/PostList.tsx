@@ -17,7 +17,7 @@ function postList({ user }: { user: null | IUser }) {
         }
         fetchPosts()
     }, [])
-    console.log(posts);
+
     
 
     const [search, setSearch] = React.useState("");
@@ -27,13 +27,16 @@ function postList({ user }: { user: null | IUser }) {
     }
 
     function filterPosts() {
-        return posts?.filter((post: { title: string }) => {
+        return posts?.filter((post: { category: string, title: string, content: string, categoryContent: string}) => {
             const lowerSearch = search.toLowerCase();
-            const lowerPostName = post.title.toLowerCase();
-
-            return lowerPostName.includes(lowerSearch);
+            const lowerPostCategory = post.category.toLowerCase();
+            const lowerPostCategoryContent = post.categoryContent.toLowerCase();
+            const lowerPostTitle = post.title.toLowerCase();
+            // const lowerContent = post.content.toLowerCase();
+            return lowerPostCategory.includes(lowerSearch) || lowerPostCategoryContent.includes(lowerSearch) || lowerPostTitle.includes(lowerSearch)
         });
     }
+    
     const filteredLength: any = filterPosts()?.length
 
     return (<>
@@ -42,16 +45,44 @@ function postList({ user }: { user: null | IUser }) {
                 <div className="container m-0 p-0">
             <Post  />
                 <input
-                    className="input background-is-rouge is-rounded mb-6 "
+                    className="input has-border-green background-is-rouge is-rounded mb-6 "
                     placeholder="Search character..."
                     onChange={handleChange}
                     value={search}
                 />
-                {filteredLength === 0 && <div className="account  has-text-centered background-is-grey ">
-                    <p className="text is-black ">Cannot find your post ?</p>
-                    <a href="/create"><button className="button  mb-3">Create new Post</button></a>
-
-                </div>}
+                <div className="columns mb-4">
+                    <div className="column">
+                        <label className="radio">
+                                <input className="mr-2" type="radio" name="category" onChange={handleChange} value={"Is feeling"} />
+                                Is feeling
+                            </label>
+                            </div>
+                    <div className="column"><label className="radio">
+                            <input className="mr-2" type="radio" onChange={handleChange} 
+                            name="category"
+                            value={"Need help with"} />
+                            Need help with
+                        </label>
+                        </div>
+                    <div className="column">
+                        <label className="radio">
+                                <input className="mr-2" type="radio" name="category" onChange={handleChange} value={"Is developing"} />
+                                Is developing
+                            </label>
+                            </div>
+                    <div className="column">
+                        <label className="radio">
+                                <input className="mr-2" type="radio" name="category" onChange={handleChange} value={"Is learning"} />
+                                Is learning 
+                            </label>
+                            </div>
+                    <div className="column">
+                        <label className="radio">
+                                <input className="mr-2" type="radio" name="category" onChange={handleChange} value={"Is attending"} />
+                                Is attending
+                            </label>
+                            </div>
+                </div>
                     <div className="columns is-multiline is-centered mb-6">
                         {filterPosts()?.map((post) => {
                             return <PostCardFull key={post.id} {...post} />;

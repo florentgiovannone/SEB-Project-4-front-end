@@ -146,7 +146,7 @@ export default function Signup() {
           <label className="label">Username <span className="has-text-danger">*</span></label>
           <div className="control">
             <input
-              className="input border-is-rouge"
+              className="input has-border-green "
               placeholder="Username"
               type="text"
               name={'username'}
@@ -161,7 +161,7 @@ export default function Signup() {
           <label className="label">Firstname <span className="has-text-danger">*</span></label>
           <div className="control">
             <input
-              className="input border-is-rouge"
+              className="input has-border-green "
               placeholder="Firstname"
               type="text"
               name={'firstname'}
@@ -175,7 +175,7 @@ export default function Signup() {
           <label className="label">Lastname <span className="has-text-danger">*</span></label>
           <div className="control">
             <input
-              className="input border-is-rouge"
+              className="input has-border-green "
               placeholder="Lastname"
               type="text"
               name={'lastname'}
@@ -189,7 +189,7 @@ export default function Signup() {
           <label className="label">Email <span className="has-text-danger">*</span></label>
           <div className="control">
             <input
-              className="input border-is-rouge"
+              className="input has-border-green "
               placeholder="Email"
               type="text"
               name={'email'}
@@ -202,9 +202,9 @@ export default function Signup() {
         <div className="field  mt-4">
           <div>
             <div className="container">
-              <button className="button" onClick={handleUpload}>Click to upload an image</button>
+              <button className="button mb-3" onClick={handleUpload}>Click to upload an image</button>
               <textarea
-                className="textarea is-primary"
+              className="textarea has-border-green"
                 placeholder='Image URL'
                 onChange={handleChange}
                 name={'image'}
@@ -220,7 +220,7 @@ export default function Signup() {
           <label className="label">Password <span className="has-text-danger">*</span></label>
           <div className="control">
             <input
-              className="input border-is-rouge"
+              className="input has-border-green "
               placeholder="Password"
               type="password"
               name={'password'}
@@ -249,7 +249,7 @@ export default function Signup() {
           <label className="label">Confirm password <span className="has-text-danger">*</span></label>
           <div className="control">
             <input
-              className="input border-is-rouge"
+              className="input has-border-green "
               placeholder="Confirm password"
               type="password"
               name={'password_confirmation'}
@@ -259,7 +259,7 @@ export default function Signup() {
             <h2 className="has-text-danger">{errorData}</h2>
           </div>
         </div>
-        <button className="button border-is-rouge  mt-4" onClick={handleSubmit}>Submit</button>
+        <button className="button has-border-green   mt-4" onClick={handleSubmit}>Submit</button>
     </div>
   </div>
     <Footer />

@@ -44,7 +44,7 @@ export default function Login({ fetchUser }: { fetchUser: Function }) {
           <label className="label">Username <span className="has-text-danger">*</span></label>
           <div className="control">
             <input
-              className="input border-is-rouge"
+              className="input has-border-green "
               placeholder="Username"
               type="text"
               name={'username'}
@@ -57,7 +57,7 @@ export default function Login({ fetchUser }: { fetchUser: Function }) {
           <label className="label">Password <span className="has-text-danger">*</span></label>
           <div className="control">
             <input
-              className="input border-is-rouge"
+              className="input has-border-green "
               placeholder="Password"
               type="password"
               name={'password'}
@@ -67,7 +67,7 @@ export default function Login({ fetchUser }: { fetchUser: Function }) {
           </div>
           {errorMessage && <small className="has-text-danger">{errorMessage}</small>}
         </div>
-        <button className="button border-is-rouge mt-4">Submit</button>
+        <button className="button has-border-green  mt-4">Submit</button>
       </form>
     </div>
   </div>

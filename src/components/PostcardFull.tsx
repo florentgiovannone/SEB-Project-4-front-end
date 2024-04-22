@@ -10,7 +10,7 @@ import { baseUrl } from "../config";
 import { isPast } from "date-fns"
 
 
-function PostCardFull({ title, content, code, image, user, id, category, post_date, like, comment }: IPost) {
+function PostCardFull({ title, content, code, image, user, id, category, categoryContent, post_date, like, comment }: IPost) {
   const [post, updateposts] = React.useState<IPost | null>(null);
   const [currentUser, updateCurrentUser] = useState<IUser | null>(null);
   const { postId } = useParams()
@@ -109,23 +109,21 @@ console.log();
 
   return <> <section className="section m-3 p-0 is-centered" >
 
-    <div className="card" style={{ width: 370 }}>
+    <div className="card has-background-black has-text-green" style={{ width: 370 }}>
 
-      <div className="columns pt-2 pb-5">
-          <div className="media-left ml-6">
+      <div className="columns pt-2 pb-5 ">
+          <div className="media-left ml-6 ">
             <figure className="image is-96x96">
               <img
-              className="is-rounded"
+              className="is-rounded mt-4 has-border-green"
                 src={user.image}
                 alt="Placeholder image"
               />
             </figure>
           </div>
           <div className="column ">
-            <p className="title is-4">{`${user.username} is feeling ${category}`}</p>
-            <p className=" is-4">{`Posted the ${post_date}`}</p>
-            {/* <p className="subtitle is-6">{`${user.firstname}`}</p>
-            <p className="subtitle is-6">{`${user.lastname}`}</p> */}
+          <p className="title has-text-green is-4">{`${user.username} ${category} ${categoryContent}`}</p>
+            <p className="has-text-white is-4">{`Posted the ${post_date}`}</p>
           </div>
 
       </div>
@@ -139,16 +137,16 @@ console.log();
         </figure>
       </div>}
 
-        <div className="card-footer">
-        {currentUser && (liked !== "liked") && <button onClick={handleLike} className="card-footer-item">like</button>}
-          {currentUser && (liked === "liked") && <button onClick={handleDislike} className="card-footer-item">dislike</button>}
-        {post && currentUser && (currentUser.id === post.user.id) && <button onClick={deletePost} className="card-footer-item">Delete Post</button>}
-        {post && currentUser && (currentUser.id === post.user.id) && <a className="card-footer-item" href={`/update/${id}`}><button>Edit Post</button></a>}
+        <div className="card-footer has-background-white">
+        {currentUser && (liked !== "liked") && <button onClick={handleLike} className="card-footer-item has-text-grey">like</button>}
+        {currentUser && (liked === "liked") && <button onClick={handleDislike} className="card-footer-item has-text-grey">dislike</button>}
+        {post && currentUser && (currentUser.id === post.user.id) && <button onClick={deletePost} className="card-footer-item has-text-grey">Delete Post</button>}
+        {post && currentUser && (currentUser.id === post.user.id) && <a className="card-footer-item has-text-grey" href={`/update/${id}`}><button>Edit Post</button></a>}
         </div>
     <Link to={`/posts/${id}`}>
-      <p className="  has-text-black is-4 ml-4">{`${like.length} Likes | ${comment.length} Comments`}</p>
+        <p className="has-background-white has-text-grey pt-2 pl-4 is-4">{`${like.length} Likes | ${comment.length} Comments`}</p>
       </Link>
-      <div className="card-content ml-4 p-0">
+      <div className="card-content has-background-white pl-4 py-0">
             <div className="block title">
               {title}
             </div>

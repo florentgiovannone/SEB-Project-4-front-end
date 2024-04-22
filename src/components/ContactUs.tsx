@@ -4,8 +4,8 @@ import Footer from "./Footer";
 
 const ContactUs: React.FC = () => {
   return (<>
-    <section className="section ">
-      <div className="content">
+    <section className="section m-0 p-0">
+      <div className="content p-6">
         <div className="container has-text-centered ">
         <h1 className="title is-size-1 mb-3">Help page</h1>
         <h2 className="title is-size-3">
@@ -57,32 +57,32 @@ const ContactUs: React.FC = () => {
         <p > We value feedback from our users! If you have any suggestions for improving CodeStream or would like to report a bug, please reach out to our support team through the "Contact Us" page on our website.</p>
       </div>
       </div>
-      <div className="content">
-        <h2 className="title is-size-3 has-text-centered">
+      <div className="content m-0 p-4 has-background-black">
+        <h2 className="title is-size-3 has-text-centered has-text-green">
           Contact us
         </h2>
-        <p className="has-text-centered">If you have any questions, feedback, or inquiries, please don't hesitate to reach out to us. We're here to help!</p>
-        <p className="has-text-centered">You can contact us through the following methods:</p>
-        <ul>
+        <p className="has-text-centered has-text-white">If you have any questions, feedback, or inquiries, please don't hesitate to reach out to us. We're here to help!</p>
+        <p className="has-text-centered has-text-white">You can contact us through the following methods:</p>
+        <ul className="has-text-white">
           <li>Email: <a href="mailto:contact@codestream.com">contact@codestream.com</a></li>
           <li>Phone: +1 (555) 123-4567</li>
           <li>Address: 123 CodeStream Blvd, Cityville, State, Country</li>
         </ul>
         <div className="field m-3">
           <div className="control">
-            <input className="input" type="text" placeholder="Name"/>
+            <input className="input has-border-green" type="text" placeholder="Name"/>
           </div>
         </div>
         <div className="field m-3">
           <div className="control">
-            <input className="input" type="text" placeholder="Email"/>
+            <input className="input has-border-green" type="text" placeholder="Email"/>
           </div>
         </div>
         <div className="field is-horizontal m-3">
           <div className="field-body">
-            <div className="field">
+            <div className="field ">
               <div className="control">
-                <textarea className="textarea" placeholder="Explain how we can help you"></textarea>
+                <textarea className="textarea has-border-green" placeholder="Explain how we can help you"></textarea>
               </div>
             </div>
           </div>
@@ -92,7 +92,7 @@ const ContactUs: React.FC = () => {
           <div className="field-body">
             <div className="field">
               <div className="control">
-                <button className="button">
+                <button className="button has-background-black">
                   Send message
                 </button>
               </div>

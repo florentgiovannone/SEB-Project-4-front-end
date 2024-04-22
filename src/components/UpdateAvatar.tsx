@@ -76,9 +76,9 @@ export default function updateAvatar({ user }: { user: null | IUser }) {
                 <div className="field  mt-4">
                     <div>
                         <div className="container">
-                            <button className="button" onClick={handleUpload}>Click to upload an image</button>
+                            <button className="button mb-3" onClick={handleUpload}>Click to upload an image</button>
                             <textarea
-                                className="textarea is-primary"
+                                className="textarea has-border-green"
                                 placeholder='Image URL'
                                 onChange={handleChange}
                                 name={'image'}
@@ -90,7 +90,7 @@ export default function updateAvatar({ user }: { user: null | IUser }) {
 
                     </div>
                 </div>
-                <div>{user && <button onClick={handleSubmit} className="button m-6  border-is-rouge">Update</button>}</div>
+                <div>{user && <button onClick={handleSubmit} className="button mt-3  border-is-rouge">Update</button>}</div>
         </div>
 
     </div>
