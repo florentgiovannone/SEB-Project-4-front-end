@@ -36,7 +36,6 @@ function postList({ user }: { user: null | IUser }) {
             return lowerPostCategory.includes(lowerSearch) || lowerPostCategoryContent.includes(lowerSearch) || lowerPostTitle.includes(lowerSearch)
         });
     }
-    
     const filteredLength: any = filterPosts()?.length
 
     return (<>
@@ -45,11 +44,14 @@ function postList({ user }: { user: null | IUser }) {
                 <div className="container m-0 p-0">
             <Post  />
                 <input
-                    className="input has-border-green background-is-rouge is-rounded mb-6 "
+                    className="input has-border-green background-is-rouge is-rounded  "
                     placeholder="Search character..."
                     onChange={handleChange}
                     value={search}
                 />
+                    <div className="column title is-size-4 has-text-centered">
+                        <h4>pick a categories to filter</h4>
+                    </div>
                 <div className="columns mb-4">
                     <div className="column">
                         <label className="radio">
@@ -88,6 +90,7 @@ function postList({ user }: { user: null | IUser }) {
                             return <PostCardFull key={post.id} {...post} />;
                         })}
                     </div>
+
 
                 
                 </div>

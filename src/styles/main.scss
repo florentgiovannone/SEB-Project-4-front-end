@@ -20,27 +20,16 @@ code {
     border: 1px solid #0FF95D !important;
 }
 
-.navbar-brand:hover {
-    color: #000;
-    background-color: #0FF95D;
-    content: url(../assets/images/Logo_inverted.png) !important;
-    height: 80px;
-    width: 80px;   
-    background-repeat: no-repeat;
-    padding: 10px
-}
+
 
 .button:hover {
     color: #000 !important;;
     background-color: #0FF95D!important;;
 }
 
-.navbar-brand {
-    content: url(../assets/images/Logo.png) !important;
-    height: 80px;
-    width: 80px;   
-    background-repeat: no-repeat;
-    padding: 10px;
+.imgNav{ 
+    min-height: 60px!important;;
+    min-width: 60px!important;;
 }
 
 .navbar-item:hover {

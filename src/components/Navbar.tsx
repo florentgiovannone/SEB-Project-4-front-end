@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { IUser } from "../interfaces/user";
 import { useState } from "react";
 import logo from "../assets/images/Logo.png"
+import inverted from "../assets/images/Logo_inverted.png"
 interface NavbarProps {
     user: null | IUser;
     setUser: Function;
@@ -10,6 +11,15 @@ interface NavbarProps {
 function Navbar({ user, setUser }: NavbarProps) {
     const navigate = useNavigate();
     const [isActive, setIsActive] = useState(false);
+    const [image, setImage] = useState(logo);
+
+    function handleMouseEnter(imagePath: any) {
+        return () => {
+            setImage(imagePath);
+        };
+    }
+
+
 
     function toggleNavbar() {
         setIsActive(!isActive);
@@ -26,9 +36,21 @@ function Navbar({ user, setUser }: NavbarProps) {
             className="navbar has-background-black"
             role="navigation"
             aria-label="main navigation "
+            
         >
-            <div className="navbar-brand ">
-
+            <div className="navbar-brand "
+                onMouseEnter={handleMouseEnter(inverted)}
+                onMouseLeave={handleMouseEnter(logo)}>
+                <Link to="/" className="navbar-item m-0 p-4">
+                    <figure className="image" >
+                        <img
+                            className="p-0 imgNav"
+                            src={image}
+                            alt="Logo"
+                            style={{ width: "70px", height: "70px" }} 
+                        />
+                    </figure>
+                </Link>
 
                 <a
                     role="button"
@@ -46,10 +68,6 @@ function Navbar({ user, setUser }: NavbarProps) {
 
             <div className={`navbar-menu ${isActive ? "is-active" : ""}`}>
                 <div className="navbar-start" >
-
-                    <Link to="/" className="navbar-item is-size-6 has-text-weight-semibold has-text-green">
-                        Home
-                    </Link>
                     <Link
                         to="/aboutus"
                         className="navbar-item is-size-6 has-text-weight-semibold py-4 has-text-green " // Increase font size and padding

@@ -65,12 +65,16 @@ function postList() {
                     <a href="/user"><button className="button is-outlined is-primary m-2">Search other users</button></a>
                 </div>
                 <input
-                    className="input has-border-green is-rounded mb-6"
+                    className="input has-border-green is-rounded"
                     placeholder="Search character..."
                     onChange={handleChange}
                     value={search}
                 />
+                <div className="column title is-size-4 has-text-centered">
+                    <h4>pick a categories to filter</h4>
+                </div>
                 <div className="columns">
+
                     <div className="column">
                         <label className="radio">
                             <input className="mr-2" type="radio" name="category" onChange={handleChange} value={"Is feeling"} />
@@ -110,7 +114,7 @@ function postList() {
                 </div>}
 
             </div>
-            <div className="columns is-multiline is-centered mb-6">
+            <div className="columns is-multiline is-centered my-6">
                 {filterPosts()?.map((post) => {
                     if (currentUser?.id === post.user.id) {
                         return <PostCardFull
