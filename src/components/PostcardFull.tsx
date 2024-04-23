@@ -129,7 +129,7 @@ console.log();
       </div>
 
       {post?.image && <div className="card-image">
-        <figure className="image is-square">
+        <figure className="image is-square" >
           <img
             src={image}
             alt="Placeholder image"
