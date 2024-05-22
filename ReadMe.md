@@ -13,6 +13,7 @@
   - [My Stream](#my-stream)
   - [Dashboard](#dashboard)
   - [Other user's page](#other-users-page)
+- [Technologies used](#technologies-used)
 - [Breif](#breif)
 - [Planning](#planning)
 - [Build Code Process](#build-code-process)
@@ -20,22 +21,22 @@
   - [Like component code](#like-component)
   - [Cloudinary component code](#Cloudinary-component)
 - [Wins](#wins)
+- [Challenges](#challenges)
 - [Key Learning/Takeway ](#key-learningtakeaway)
 - [Bugs](#bugs)
 - [Future Improvements](#future-improvements)
 
 ## Description
-### Technical requirement
 
-Work by yourself.
-Build a full-stack application by making your own backend and your own front-end
-Use Postgress and flask python to build your own API.
-Consume your API with a separate front-end built with React
-Be a complete product which most likely means multiple relationships and CRUD functionality for at least a couple of models
-Implement thoughtful user stories/wireframes that are significant enough to help you know which features are core MVP and which you can cut
-Have a visually impressive design to kick your portfolio up a notch and have something to wow future clients & employers. ALLOW time for this.
-Be deployed online so it's publicly accessible.
+Work by yourself to:
 
+ - Build a full-stack application by creating your own backend and frontend.
+ - Use PostgreSQL and Flask Python to develop your own API.
+ - Consume your API with a separate frontend built with React.
+ - Develop a complete product, likely including multiple relationships and CRUD functionality for at least a couple of models.
+ - Implement thoughtful user stories and wireframes to identify core MVP features and determine which features can be cut.
+ - Design visually impressive interfaces to enhance your portfolio and impress future clients and employers. Make sure to allocate sufficient time for this.
+ - Deploy the application online to make it publicly accessible.
 
 ### main app
 
@@ -49,35 +50,42 @@ I decided to work on a developper focussed social media where users can signup a
 -See other users profils and stream
 -Comment and like on each posts
 
-## Deployement
+## Deployment
 
-We have use Netify to deploy our Front end and Heroku to deploy our backend
+We used Netlify to deploy our frontend and Heroku to deploy our backend.
 
 [Link to the APP](https://codestreamsocialmedia.netlify.app/)
 
-Frontend
-1. Clone repository
-2. Navigate to the project directory
-3. Run `npm i`
-4. Run `npm run dev` - This should then open a localhost page in your browser
+### Frontend
+1. Clone the repository.
+2. Navigate to the project directory.
+3. Run `npm install`.
+4. Run `npm run dev`. This should open a localhost page in your browser.
 
-Backend
-1. Clone repository
-2. Navigate to the project directory
-3. Run `pipenv instal`
-4. Run  `pipenv run python seed.py` 
-5. Run `pipenv run flask run  `
+### Backend
+1. Clone the repository.
+2. Navigate to the project directory.
+3. Run `pipenv install`.
+4. Run `pipenv run python seed.py`.
+5. Run `pipenv run flask run`.
+
 
 ## Timeframe & Working Team
+I decided to work on a developer-focused social media platform where users can sign up and log in. Each user would be able to:
 
-This was a 9 days project to be worked alone
--I worked strategecally seting clear tasks on a daily basis to acheive 
--After everyday I was reviewing and adapting what needed to be done for the following day depending on progress made
+- Post on the main channel
+- Update their own posts
+- Delete their own posts
+- Update account details
+- Upload pictures from their device
+- Look for other users
+- View other users' profiles and streams
+- Comment on and like each post
 
-Technologie used
-Frontend app using React.js to use the builder interface using a router on the main app
-Hybrid CSS using Bulma as a framework  and some custom CSS
-Flask, SQLAchemy and Marshmallow to build our API
+This was a 9-day solo project.
+
+- I strategically set clear tasks on a daily basis to achieve my goals.
+- At the end of each day, I reviewed and adapted the tasks for the following day based on the progress made.
 
 ### Home page
 
@@ -107,21 +115,27 @@ Flask, SQLAchemy and Marshmallow to build our API
 
 ![Other user's page](./src/assets/images/users.png)
 
-## Breif
-The objective of this project was to build a React application using our own API we learned during our classes lessons.
+## Technologies Used
+- Frontend: Developed using React.js with a router on the main app for building the user interface.
+- CSS: Utilized a hybrid approach with Bulma as the framework along with some custom CSS.
+- Backend: Built the API using Flask, SQLAlchemy, and Marshmallow.
+
+
+
+## Brief
+The objective of this project was to build a React application using our own API with PostgreSQL and Python that I learned during my classes.
 
 ### Front End
-This had to included APi fetching, Routing and mapping onl secting whta was needed from the API.
-The document structure had to use Different component using router and routes on the main app
+This involved API fetching, routing, and mapping, selecting only what was needed from the API. The document structure had to use different components with router and routes on the main app.
 
-### Back end
-We had to build the back end using flask python
--Model: This is where all our model and schemas are located and were we tell our backend what element are mandatory to create a new entry.
--Controller: This is where we had all our function depending on what we wanted the user to do(Example: create and account or a new wine or just login) we included all our routes on our controllers too 
+### Back End
+I built the back end using Flask Python.
+- **Model**: This is where all our models and schemas are located, and where I defined the mandatory elements required to create a new entry.
+- **Controller**: This is where I implemented all our functions depending on what actions I wanted the user to perform (e.g., create an account, add a new wine, or just log in). I also included all our routes in our controllers.
 
-We used Prostgress as our SQL
+I used PostgreSQL as our SQL database.
 
-We also had a seed folder where all our original database was going to be seeded originally 
+Additionally, I had a seed folder where our original database was going to be seeded initially.
 
 
 ## Planning
@@ -198,12 +212,13 @@ We also had a seed folder where all our original database was going to be seeded
 ```
 
 ## Build Code Process
-I initiated the project by seting up the backend structure and the react basic framework and started building on this.
-I was particulary proud of comment, like and add picture functionallities
-
+I initiated the project by setting up the backend structure and the basic React framework, and then started building on this foundation. I was particularly proud of implementing the comment, like, and add picture functionalities.
 
 ### Comment component
+For commewnt function, we had both a front-end and a back-end part:
 #### Front End
+- **Cloning Form Data:** On the frontend, we had to clone the form data and create a new field that we posted into the API.
+- **Error Handling:** Additionally, we implemented error handling to manage any issues that occurred during form submission.
 ```jsx
   function handleChange(e: any) {
     const fieldName = e.target.name
@@ -230,6 +245,8 @@ I was particulary proud of comment, like and add picture functionallities
   }
 ```
 #### Back end
+- **Handling Submitted Text:** On the backend, I processed the text submitted to the body and saved it into our API.
+- **Console Error Handling:** Additionally, I integrated console error handling to identify and address any errors that occurred during processing.
 ```jsx
 @router.route("/posts/<int:post_id>/comments", methods=["POST"])
 @secure_route
@@ -253,7 +270,11 @@ def create_comment(post_id):
 ```
 
 ### Like componnent
+For the Like function, we had both a front-end and a back-end part:
 #### Front end
+- **Checked If Liked Function:** On the frontend, I created a function to check if the post is already liked. This function was used for both the handleLike and handleDislike functions, so if the post is already liked, it will then be unliked.
+- **Fetching and Posting to the API:** Additionally, I implemented fetching and posting to and from the API to interact with the backend and manage the like and dislike functionality.
+
 ```jsx
   function checkIfLiked() {
     like.filter(like => {
@@ -294,8 +315,8 @@ def create_comment(post_id):
     }
   }
 ```
-
 #### Back end
+- **Handling Likes and Dislikes:** On the backend, we retrieved the post that needed to be liked or disliked. We then pushed or deleted the user into the posts array accordingly, updating the post's data in the database.
 ```jsx
 @router.route("/posts/<int:post_id>/likes", methods=["POST"])
 @secure_route
@@ -328,20 +349,25 @@ def remove_like(like_id):
     like.remove()
     return {"message": "like Deleted"}, HTTPStatus.OK
 ```
+
 ## Wins
-After this project I now feel much more comfident developing a fullstack app using react.js and flask python
-I understand how a back end work and how all my end point are talking to each orther
-The ability to add a picture from the device was a big win for me as I wanted to get this feature from the previeous project
+Boosting Confidence in React and Confirming Flask Work:
 
-The comment and Like feature was also something big as it took me a whole day of research and coding for each feature 
+- **Deeper Understanding of Backend Development:** After completing this project, I now feel much more confident in developing a full-stack application using React.js and Flask Python. I have gained a deeper understanding of how the backend works and how all my endpoints communicate with each other.
+- **Implementing Picture Upload Functionality:** Implementing the ability to add a picture from the device was a significant achievement for me, as it was a feature I wanted to include from a previous project.
+- **Milestone: Comment and Like Features:** Additionally, implementing the comment and like features was a major milestone. It took me a whole day of research and coding for each feature, but the effort was worth it.
 
-## Key learning/Takeaway
-1/ If I would have to do this project again I would build my backend models differently and think a little bit more on what are the main feature needed and what is dependant of what. As a result I was not able to have cascading deleting. 
+## Challenges
+- **Remove Comment Functionality:** The main challenge around this project was the remove comment functionality, which I haven't been able to resolve yet.
+- **Cascading Deletion Issues:** As stated below, due to the way I structured my models, I haven't been able to use cascading deletion to remove comments.
+
+## Key Learning/Takeaway
+1. If I were to do this project again, I would structure my backend models differently and carefully consider the main features needed and their dependencies. As a result, I was unable to implement cascading deletion.
 
 ## Bugs
-Due to  a lack of time and my models being structure in the way it is. the user is unable to delete a post that has dependencies (comments or likes)
+Due to a lack of time and the structure of my models, users are unable to delete a post that has dependencies such as comments or likes.
 
 ## Future Improvements
--Have the functionalities to like and comment on other comments
--Have the functionallity to contact other user
--Have the functionallity to follow other user and be followed by other users
+- Implement functionalities to like and comment on other comments.
+- Add the functionality to contact other users.
+- Introduce the ability to follow other users and be followed by others.
