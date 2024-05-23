@@ -42,12 +42,12 @@ Work by yourself to:
 
 I decided to work on a developer focused social media where users can signup and login. Each user would be able to:
 - Post on the main channel
-- update they own posts
-- delete they own post
+- Update they own posts
+- Delete they own post
 - Update account details
 - Upload picture from their device 
-- look for other users
-- See other users profils and stream
+- Look for other users
+- See other users profiles and stream
 - Comment and like on each posts
 
 ## Deployment
@@ -71,17 +71,6 @@ We used Netlify to deploy our frontend and Heroku to deploy our backend.
 
 
 ## Timeframe & Working Team
-I decided to work on a developer-focused social media platform where users can sign up and log in. Each user would be able to:
-
-- Post on the main channel
-- Update their own posts
-- Delete their own posts
-- Update account details
-- Upload pictures from their device
-- Look for other users
-- View other users' profiles and streams
-- Comment on and like each post
-
 This was a 9-day solo project.
 
 - I strategically set clear tasks on a daily basis to achieve my goals.
@@ -117,18 +106,18 @@ This was a 9-day solo project.
 
 ## Technologies Used
 - Frontend: Developed using React.js with a router on the main app for building the user interface.
-- CSS: Utilized a hybrid approach with Bulma as the framework along with some custom CSS.
+- CSS: Utilised a hybrid approach with Bulma as the framework along with some custom CSS.
 - Backend: Built the API using Flask, SQLAlchemy, and Marshmallow.
 
 
 
 ## Brief
-The objective of this project was to build a React application using our own API with PostgreSQL and Python that I learned during my classes.
+The objective of this project was to build a React application using our own API with PostgreSQL and Python that I learned during my lectures.
 
-### Front End
+### Frontend
 This involved API fetching, routing, and mapping, selecting only what was needed from the API. The document structure had to use different components with router and routes on the main app.
 
-### Back End
+### Backend
 I built the back end using Flask Python.
 - **Model**: This is where all our models and schemas are located, and where I defined the mandatory elements required to create a new entry.
 - **Controller**: This is where I implemented all our functions depending on what actions I wanted the user to perform (e.g., create an account, add a new wine, or just log in). I also included all our routes in our controllers.
@@ -139,7 +128,7 @@ Additionally, I had a seed folder where our original database was going to be se
 
 
 ## Planning
-### Front end
+### Frontend
 ```plaintext
 |--public
 |   |--_redirect
@@ -183,7 +172,7 @@ Additionally, I had a seed folder where our original database was going to be se
 |   |--README.MD
 
 ```
-### Back end
+### Backend
 ```plaintext
 |--config
 |   |--environment.py
@@ -215,10 +204,11 @@ Additionally, I had a seed folder where our original database was going to be se
 I initiated the project by setting up the backend structure and the basic React framework, and then started building on this foundation. I was particularly proud of implementing the comment, like, and add picture functionalities.
 
 ### Comment component
-For commewnt function, we had both a front-end and a back-end part:
-#### Front End
-- **Cloning Form Data:** On the frontend, we had to clone the form data and create a new field that we posted into the API.
-- **Error Handling:** Additionally, we implemented error handling to manage any issues that occurred during form submission.
+For comment function, I had both a front-end and a back-end part:
+
+#### Frontend
+- **Cloning Form Data:** On the frontend, Ihad to clone the form data and create a new field that Iposted into the API.
+- **Error Handling:** Additionally, Iimplemented error handling to manage any issues that occurred during form submission.
 ```jsx
   function handleChange(e: any) {
     const fieldName = e.target.name
@@ -270,7 +260,7 @@ def create_comment(post_id):
 ```
 
 ### Like componnent
-For the Like function, we had both a front-end and a back-end part:
+For the Like function, Ihad both a front-end and a back-end part:
 #### Front end
 - **Checked If Liked Function:** On the frontend, I created a function to check if the post is already liked. This function was used for both the handleLike and handleDislike functions, so if the post is already liked, it will then be unliked.
 - **Fetching and Posting to the API:** Additionally, I implemented fetching and posting to and from the API to interact with the backend and manage the like and dislike functionality.
@@ -316,7 +306,7 @@ For the Like function, we had both a front-end and a back-end part:
   }
 ```
 #### Back end
-- **Handling Likes and Dislikes:** On the backend, we retrieved the post that needed to be liked or disliked. We then pushed or deleted the user into the posts array accordingly, updating the post's data in the database.
+- **Handling Likes and Dislikes:** On the backend, Iretrieved the post that needed to be liked or disliked. We then pushed or deleted the user into the posts array accordingly, updating the post's data in the database.
 ```jsx
 @router.route("/posts/<int:post_id>/likes", methods=["POST"])
 @secure_route
