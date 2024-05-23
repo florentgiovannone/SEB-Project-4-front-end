@@ -52,7 +52,7 @@ I decided to work on a developer focused social media where users can signup and
 
 ## Deployment
 
-We used Netlify to deploy our frontend and Heroku to deploy our backend.
+I used Netlify to deploy our frontend and Heroku to deploy our backend.
 
 [Link to the APP](https://codestreamsocialmedia.netlify.app/)
 
@@ -207,8 +207,8 @@ I initiated the project by setting up the backend structure and the basic React 
 For comment function, I had both a front-end and a back-end part:
 
 #### Frontend
-- **Cloning Form Data:** On the frontend, Ihad to clone the form data and create a new field that Iposted into the API.
-- **Error Handling:** Additionally, Iimplemented error handling to manage any issues that occurred during form submission.
+- **Cloning Form Data:** On the frontend, I had to clone the form data and create a new field that I posted into the API.
+- **Error Handling:** Additionally, I implemented error handling to manage any issues that occurred during form submission.
 ```jsx
   function handleChange(e: any) {
     const fieldName = e.target.name
@@ -234,7 +234,7 @@ For comment function, I had both a front-end and a back-end part:
     }
   }
 ```
-#### Back end
+#### Backend
 - **Handling Submitted Text:** On the backend, I processed the text submitted to the body and saved it into our API.
 - **Console Error Handling:** Additionally, I integrated console error handling to identify and address any errors that occurred during processing.
 ```jsx
@@ -259,9 +259,10 @@ def create_comment(post_id):
     return comment_serializer.jsonify(comment), HTTPStatus.CREATED
 ```
 
-### Like componnent
-For the Like function, Ihad both a front-end and a back-end part:
-#### Front end
+### Like component
+For the Like function, I had both a front-end and a back-end part:
+
+#### Frontend
 - **Checked If Liked Function:** On the frontend, I created a function to check if the post is already liked. This function was used for both the handleLike and handleDislike functions, so if the post is already liked, it will then be unliked.
 - **Fetching and Posting to the API:** Additionally, I implemented fetching and posting to and from the API to interact with the backend and manage the like and dislike functionality.
 
@@ -305,8 +306,8 @@ For the Like function, Ihad both a front-end and a back-end part:
     }
   }
 ```
-#### Back end
-- **Handling Likes and Dislikes:** On the backend, Iretrieved the post that needed to be liked or disliked. We then pushed or deleted the user into the posts array accordingly, updating the post's data in the database.
+#### Backend
+- **Handling Likes and Dislikes:** On the backend, I retrieved the post that needed to be liked or disliked. I then pushed or deleted the user into the posts array accordingly, updating the post's data in the database.
 ```jsx
 @router.route("/posts/<int:post_id>/likes", methods=["POST"])
 @secure_route
@@ -341,7 +342,7 @@ def remove_like(like_id):
 ```
 
 ## Wins
-Boosting Confidence in React and Confirming Flask Work:
+Boosting confidence in Python usinf Flask and as well as React used in previous projects:
 
 - **Deeper Understanding of Backend Development:** After completing this project, I now feel much more confident in developing a full-stack application using React.js and Flask Python. I have gained a deeper understanding of how the backend works and how all my endpoints communicate with each other.
 - **Implementing Picture Upload Functionality:** Implementing the ability to add a picture from the device was a significant achievement for me, as it was a feature I wanted to include from a previous project.
@@ -352,7 +353,8 @@ Boosting Confidence in React and Confirming Flask Work:
 - **Cascading Deletion Issues:** As stated below, due to the way I structured my models, I haven't been able to use cascading deletion to remove comments.
 
 ## Key Learning/Takeaway
-1. If I were to do this project again, I would structure my backend models differently and carefully consider the main features needed and their dependencies. As a result, I was unable to implement cascading deletion.
+### Planning more carefully
+- If I were to do this project again, I would structure my backend models differently and carefully consider the main features needed and their dependencies. As a result, I was unable to implement cascading deletion.
 
 ## Bugs
 Due to a lack of time and the structure of my models, users are unable to delete a post that has dependencies such as comments or likes.
