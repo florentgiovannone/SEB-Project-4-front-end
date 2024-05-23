@@ -14,7 +14,7 @@
   - [Dashboard](#dashboard)
   - [Other user's page](#other-users-page)
 - [Technologies used](#technologies-used)
-- [Breif](#breif)
+- [Brief](#breif)
 - [Planning](#planning)
 - [Build Code Process](#build-code-process)
   - [Comment component code](#comment-component)
@@ -22,7 +22,7 @@
   - [Cloudinary component code](#Cloudinary-component)
 - [Wins](#wins)
 - [Challenges](#challenges)
-- [Key Learning/Takeway ](#key-learningtakeaway)
+- [Key Learnings/Takeways ](#key-learningtakeaway)
 - [Bugs](#bugs)
 - [Future Improvements](#future-improvements)
 
@@ -38,17 +38,17 @@ Work by yourself to:
  - Design visually impressive interfaces to enhance your portfolio and impress future clients and employers. Make sure to allocate sufficient time for this.
  - Deploy the application online to make it publicly accessible.
 
-### main app
+### Main app
 
-I decided to work on a developper focussed social media where users can signup and login. Each user would be able to:
--Post on the main channel
--update they own posts
--delete they own post
--Update account details
--Upload picture from their device 
--look for other users
--See other users profils and stream
--Comment and like on each posts
+I decided to work on a developer focused social media where users can signup and login. Each user would be able to:
+- Post on the main channel
+- update they own posts
+- delete they own post
+- Update account details
+- Upload picture from their device 
+- look for other users
+- See other users profils and stream
+- Comment and like on each posts
 
 ## Deployment
 
