@@ -9,7 +9,6 @@ interface NavbarProps {
 }
 
 function Navbar({ user, setUser }: NavbarProps) {
-    const navigate = useNavigate();
     const [isActive, setIsActive] = useState(false);
     const [image, setImage] = useState(logo);
 
@@ -36,7 +35,6 @@ function Navbar({ user, setUser }: NavbarProps) {
             className="navbar has-background-black"
             role="navigation"
             aria-label="main navigation "
-            
         >
             <div className="navbar-brand "
                 onMouseEnter={handleMouseEnter(inverted)}
@@ -47,7 +45,7 @@ function Navbar({ user, setUser }: NavbarProps) {
                             className="p-0 imgNav"
                             src={image}
                             alt="Logo"
-                            style={{ width: "70px", height: "70px" }} 
+                            style={{ width: "70px", height: "70px" }}
                         />
                     </figure>
                 </Link>
@@ -90,43 +88,41 @@ function Navbar({ user, setUser }: NavbarProps) {
 
                 <div className="navbar-end">
 
-                            {user ? (
-                            <> 
-                                    <Link
-                                    to={"/"}
-                                        onClick={logout}
-                                        className="navbar-item is-light is-size-6 has-text-weight-semibold has-text-green"
-                                    >
-                                        Logout
-                                    </Link>
-                                    <Link
-                                        to="/mystream"
-                                        className="navbar-item is-size-6 has-text-weight-semibold has-text-green"
-                                    >
-                                        My Stream
-                                    </Link>
-                                </>
-                            ) : (
-                                <>
-                                    <Link
-                                        to="/signup"
-                                        className="  navbar-item is-light is-size-5 has-text-weight-semibold button-wrapper has-text-green"
-                                    >
-                                        <strong>Sign up</strong>
-                                    </Link>
-                                    <Link
-                                        to="/login"
-                                        className=" navbar-item is-light is-size-5 has-text-weight-semibold button-wrapper has-text-green"
-                                    >
-                                        Login
-                                    </Link>
-                                </>
-                            )}
-
-
+                    {user ? (
+                        <>
+                            <Link
+                                to={"/"}
+                                onClick={logout}
+                                className="navbar-item is-light is-size-6 has-text-weight-semibold has-text-green"
+                            >
+                                Logout
+                            </Link>
+                            <Link
+                                to="/mystream"
+                                className="navbar-item is-size-6 has-text-weight-semibold has-text-green"
+                            >
+                                My Stream
+                            </Link>
+                        </>
+                    ) : (
+                        <>
+                            <Link
+                                to="/signup"
+                                className="  navbar-item is-light is-size-5 has-text-weight-semibold button-wrapper has-text-green"
+                            >
+                                <strong>Sign up</strong>
+                            </Link>
+                            <Link
+                                to="/login"
+                                className=" navbar-item is-light is-size-5 has-text-weight-semibold button-wrapper has-text-green"
+                            >
+                                Login
+                            </Link>
+                        </>
+                    )}
                 </div>
-                </div>
-                
+            </div>
+
         </nav>
     );
 }
