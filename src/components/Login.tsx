@@ -29,11 +29,13 @@ export default function Login({ fetchUser }: { fetchUser: Function }) {
       localStorage.setItem('token', resp.data.token);
       await fetchUser();
       navigate('/');
-    } catch (error: any) {
-      const resp = await axios.post(`${baseUrl}/login`, formData);
-      setErrorMessage(resp.data.error); 
-      console.log(error);
-      
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        setErrorMessage(error.response.data.error || "An unexpected error occured")
+      } else {
+        console.error("Error during login", error);
+        setErrorMessage("An unexpected error occured"); 
+      }
     }
   }
 

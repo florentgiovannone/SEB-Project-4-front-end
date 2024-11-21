@@ -1,12 +1,40 @@
-import { SyntheticEvent, useState } from "react"
+import React, {useReducer, useState, SyntheticEvent} from "react"
 import axios from 'axios'
 import { useNavigate } from "react-router-dom"
 import Footer from "./Footer"
-import React from "react";
 import { IUser } from "../interfaces/user";
 import { baseUrl } from "../config";
 
-type User = null | Array<IUser>
+interface ValidationState{
+  usernameValid: boolean;
+  passwordValid: boolean;
+  passwordCheck: {
+    hasUppercase: boolean;
+    hasLowercase: boolean;
+    hasSpecialChar: boolean;
+    hasNumber: boolean;
+    hasValidLength: boolean;
+  };
+}
+
+const initialValidationState: ValidationState = {
+  usernameValid: false,
+  passwordValid: false,
+  passwordCheck: {
+    hasUppercase: false,
+    hasLowercase: false,
+    hasSpecialChar: false,
+    hasNumber: false,
+    hasValidLength: false,
+  },
+};
+
+function validationReducer(state: ValidationState, action: Partial<ValidationState>
+): ValidationState {
+  return { ...state, ...action}
+}
+
+
 export default function Signup() {
   const navigate = useNavigate()
 
@@ -102,7 +130,6 @@ export default function Signup() {
     filterUser(newFormData)
     setFormData(newFormData)
   }
-  console.log(formData);
 
   async function handleSubmit(e: SyntheticEvent) {
     try {
@@ -114,7 +141,7 @@ export default function Signup() {
       setErrorData(e.response.data.error)
     }
   }
-  console.log(errorData)
+
 
   function handleUpload() {
     window.cloudinary
