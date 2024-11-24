@@ -164,60 +164,6 @@ export default function Signup() {
                             </small>
                         )}
                     </div>
-
-                    {/* First Name */}
-                    <div className="field mt-4">
-                        <label className="label">First Name *</label>
-                        <input
-                            className="input"
-                            type="text"
-                            name="firstname"
-                            placeholder="First Name"
-                            onChange={handleChange}
-                            value={formData.firstname}
-                        />
-                    </div>
-
-                    {/* Last Name */}
-                    <div className="field mt-4">
-                        <label className="label">Last Name *</label>
-                        <input
-                            className="input"
-                            type="text"
-                            name="lastname"
-                            placeholder="Last Name"
-                            onChange={handleChange}
-                            value={formData.lastname}
-                        />
-                    </div>
-
-                    {/* Email */}
-                    <div className="field mt-4">
-                        <label className="label">Email *</label>
-                        <input
-                            className="input"
-                            type="email"
-                            name="email"
-                            placeholder="Email"
-                            onChange={handleChange}
-                            value={formData.email}
-                        />
-                    </div>
-
-                    {/* Image */}
-                    <div className="field mt-4">
-                        <button className="button is-primary" onClick={handleUpload}>
-                            Upload Image
-                        </button>
-                        <textarea
-                            className="textarea"
-                            placeholder="Image URL"
-                            name="image"
-                            onChange={handleChange}
-                            value={formData.image}
-                        />
-                    </div>
-
                     {/* Password */}
                     <div className="field mt-4">
                         <label className="label">Password *</label>

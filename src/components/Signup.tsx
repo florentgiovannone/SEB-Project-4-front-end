@@ -1,11 +1,11 @@
-import React, {useReducer, useState, SyntheticEvent} from "react"
+import { useReducer, useState, SyntheticEvent, useEffect } from "react"
 import axios from 'axios'
 import { useNavigate } from "react-router-dom"
 import Footer from "./Footer"
 import { IUser } from "../interfaces/user";
 import { baseUrl } from "../config";
 
-interface ValidationState{
+interface ValidationState {
   usernameValid: boolean;
   passwordValid: boolean;
   passwordCheck: {
@@ -31,14 +31,12 @@ const initialValidationState: ValidationState = {
 
 function validationReducer(state: ValidationState, action: Partial<ValidationState>
 ): ValidationState {
-  return { ...state, ...action}
+  return { ...state, ...action }
 }
-
-
 export default function Signup() {
   const navigate = useNavigate()
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<Omit<IUser, "id"> & { password: string; password_confirmation: string }>({
     email: "",
     firstname: "",
     lastname: "",
@@ -48,107 +46,84 @@ export default function Signup() {
     password_confirmation: ""
   })
 
-  const [errorData, setErrorData] = useState(" "
-  )
+  const [errorData, setErrorData] = useState<string | null>(null);
+  const [usernameMessage, setUsernameMessage] = useState(" ");
+  const [existingUsers, setExistingUsers] = useState<IUser[] | null>(null);
+  const [validationState, dispatch] = useReducer(validationReducer, initialValidationState);
 
-  const [usernameError, setUsernameError] = React.useState<User>(null)
-
-  React.useEffect(() => {
-    async function fetchPosts() {
-      const resp = await fetch(`${baseUrl}/all_users`)
-      const data = await resp.json()
-      setUsernameError(data)
+  useEffect(function fetchUsers() {
+    async function getUsers() {
+      try {
+        const resp = await axios.get<IUser[]>(`${baseUrl}/all_users`)
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
     }
-    fetchPosts()
+    getUsers()
   }, [])
-  console.log(usernameError);
-  
-  const [usernameUpdate, setUsernameUpdate] = React.useState("");
-  const [green, setGreen] = React.useState(false);
-  const [greenPassUpper, setGreenPassUpper] = React.useState(false);
-  const [greenPassLower, setGreenPassLower] = React.useState(false);
-  const [greenPassSpec, setGreenPassSpec] = React.useState(false);
-  const [greenPassNum, setGreenPassNum] = React.useState(false);
-  const [greenPassLength, setGreenPassLength] = React.useState(false);
 
-  function filterUser(newFormData: { email: string; firstname: string; lastname: string; username: string; image: string; password: string; password_confirmation: string; }) {
-    if (!usernameError) {
-      return;
-    }
-    const foundUser = usernameError.find((user) => user.username === newFormData.username);
-    if (foundUser) {
-      setUsernameUpdate("The username already exists");
-      setGreen(false)
+  function validateUsername(username: string) {
+    if (!existingUsers) return;
+
+    const isExistingUser = existingUsers.some((user) => user.username === username);
+    if (isExistingUser) {
+      setUsernameMessage("The username already exist")
+      dispatch({ usernameValid: false })
     } else {
-      setUsernameUpdate("You can use this username");
-      setGreen(true)
-    }
-      const spec_chart = ["!", "@", "#", "$", "%", "&", "*"]
-      const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
-      const hasUppercase = newFormData.password.split('').some(char => char.toUpperCase() === char && char.toLowerCase() !== char);
-      const hasLowercase = newFormData.password.split('').some(char => char.toUpperCase() !== char && char.toLowerCase() === char);
-      const hasSpecial = newFormData.password.split('').some(char => spec_chart.includes(char))
-      const hasnumber = newFormData.password.split('').some(char => numbers.includes(char))
-
-    if (hasUppercase){
-      setGreenPassUpper(true)
-    }
-    else{
-      setGreenPassUpper(false)
-    }
-    if (hasLowercase) {
-      setGreenPassLower(true)
-    }
-    else {
-      setGreenPassLower(false)
-    }
-    if (hasSpecial) {
-      setGreenPassSpec(true)
-    }
-    else {
-      setGreenPassSpec(false)
-    }
-    if (hasnumber) {
-      setGreenPassNum(true)
-    }
-    else {
-      setGreenPassNum(false)
-    }
-    if (newFormData.password.length <= 20 && newFormData.password.length >= 8) {
-      setGreenPassLength(true)
-    }
-    else {
-      setGreenPassLength(false)
+      setUsernameMessage("You can use this username")
+      dispatch({ usernameValid: true })
     }
   }
-  
-  function handleChange(e: any) {
 
-    const fieldName = e.target.name
-    const newFormData = structuredClone(formData)
-    newFormData[fieldName as keyof typeof formData] = e.target.value
-    filterUser(newFormData)
-    setFormData(newFormData)
+  function validatePassword(password: string) {
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasLowercase = /[a-z]/.test(password);
+    const hasSpecialChar = /[!@#$%&*]/.test(password);
+    const hasNumber = /\d/.test(password);
+    const hasValidLength = password.length >= 8 && password.length <= 20;
+
+    const isPasswordValid = hasUppercase && hasLowercase && hasSpecialChar && hasNumber && hasValidLength;
+    dispatch({
+      passwordValid: isPasswordValid,
+      passwordCheck: {
+        hasUppercase, hasLowercase, hasSpecialChar, hasNumber, hasValidLength
+      },
+    });
+  }
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (name == "username") validateUsername(value);
+    if (name == "password") validatePassword(value);
+
   }
 
   async function handleSubmit(e: SyntheticEvent) {
+    e.preventDefault();
+    if (validationState.usernameValid || !validationState.passwordValid) {
+      setErrorData("Please ensure all field are valid");
+      return;
+    }
+    if (formData.password !== formData.password_confirmation) {
+      setErrorData("Password do not match");
+      return;
+    }
     try {
-      e.preventDefault()
-      const resp = await axios.post(`${baseUrl}/signup`, formData)
-      console.log(resp.data)
+      const response = await axios.post<IUser>(`${baseUrl}/signup`, formData)
+      console.log(response.data)
       navigate('/login')
     } catch (e: any) {
       setErrorData(e.response.data.error)
     }
   }
 
-
   function handleUpload() {
     window.cloudinary
       .createUploadWidget(
         {
-          cloudName: "ded4jhx7i", //!this will be your cloud name - this should be in your .env
-          uploadPreset: "Codestream", //!this will be your upload presets - this should be in your .env
+          cloudName: "ded4jhx7i",
+          uploadPreset: "Codestream",
           cropping: true,
           croppingAspectRatio: 1
         },
@@ -156,8 +131,6 @@ export default function Signup() {
           if (result.event !== "success") {
             return;
           }
-          console.log(result);
-
           setFormData({
             ...formData,
             image: result.info.secure_url,
@@ -166,129 +139,150 @@ export default function Signup() {
       )
       .open();
   }
-  return <><div className="section">
-    
-    <div className="container">
-        <div className="field  mt-4">
-          <label className="label">Username <span className="has-text-danger">*</span></label>
-          <div className="control">
-            <input
-              className="input has-border-green "
-              placeholder="Username"
-              type="text"
-              name={'username'}
-              onChange={handleChange}
-              value={formData.username}
-            />
-            {green && <small className="has-text-success">{usernameUpdate}</small>}
-            {!green && <small className="has-text-danger">{usernameUpdate}</small>}
-          </div>
-        </div>
-        <div className="field  mt-4">
-          <label className="label">Firstname <span className="has-text-danger">*</span></label>
-          <div className="control">
-            <input
-              className="input has-border-green "
-              placeholder="Firstname"
-              type="text"
-              name={'firstname'}
-              onChange={handleChange}
-              value={formData.firstname}
-            />
-            {/* {errorData.firstname && <small className="has-text-danger">{errorData.firstname}</small>} */}
-          </div>
-        </div>
-        <div className="field  mt-4">
-          <label className="label">Lastname <span className="has-text-danger">*</span></label>
-          <div className="control">
-            <input
-              className="input has-border-green "
-              placeholder="Lastname"
-              type="text"
-              name={'lastname'}
-              onChange={handleChange}
-              value={formData.lastname}
-            />
-            {/* {errorData.lastname && <small className="has-text-danger">{errorData.lastname}</small>} */}
-          </div>
-        </div>
-        <div className="field  mt-4">
-          <label className="label">Email <span className="has-text-danger">*</span></label>
-          <div className="control">
-            <input
-              className="input has-border-green "
-              placeholder="Email"
-              type="text"
-              name={'email'}
-              onChange={handleChange}
-              value={formData.email}
-            />
-            {/* {errorData.email && <small className="has-text-danger">{errorData.email}</small>} */}
-          </div>
-        </div>
-        <div className="field  mt-4">
-          <div>
-            <div className="container">
-              <button className="button mb-3" onClick={handleUpload}>Click to upload an image</button>
-              <textarea
-              className="textarea has-border-green"
-                placeholder='Image URL'
+
+  
+  return (
+    <>
+      <div className="section">
+        <div className="container">
+
+          {/* Username */}
+          <div className="field mt-4">
+            <label className="label">Username <span className="has-text-danger">*</span></label>
+            <div className="control">
+              <input
+                className="input has-border-green "
+                placeholder="Username"
+                type="text"
+                name={'username'}
                 onChange={handleChange}
-                name={'image'}
-                value={formData.image} />
+                value={formData.username}
+              />
+              {usernameMessage && (
+                <small  className={validationState.passwordCheck ? "has-text-success" : "has-text-danger"}></small>
+              )}
             </div>
+          </div>
 
+          {/* Firstame */}
+          <div className="field mt-4">
+            <label className="label">Firstname <span className="has-text-danger">*</span></label>
+            <div className="control">
+              <input
+                className="input has-border-green "
+                placeholder="Firstname"
+                type="text"
+                name={'firstname'}
+                onChange={handleChange}
+                value={formData.firstname}
+              />
+            </div>
+          </div>
+
+          {/* Last Name */}
+          <div className="field  mt-4">
+            <label className="label">Lastname <span className="has-text-danger">*</span></label>
+            <div className="control">
+              <input
+                className="input has-border-green "
+                placeholder="Lastname"
+                type="text"
+                name={'lastname'}
+                onChange={handleChange}
+                value={formData.lastname}
+              />
+            </div>
+          </div>
+
+          {/* Email */}
+          <div className="field  mt-4">
+            <label className="label">Email <span className="has-text-danger">*</span></label>
+            <div className="control">
+              <input
+                className="input has-border-green "
+                placeholder="Email"
+                type="text"
+                name={'email'}
+                onChange={handleChange}
+                value={formData.email}
+              />
+              {/* {errorData.email && <small className="has-text-danger">{errorData.email}</small>} */}
+            </div>
+          </div>
+
+          {/* Image */}
+          <div className="field  mt-4">
             <div>
-            </div>
+              <div className="container">
+                <button className="button mb-3" onClick={handleUpload}>Click to upload an image</button>
+                <textarea
+                  className="textarea has-border-green"
+                  placeholder='Image URL'
+                  onChange={handleChange}
+                  name={'image'}
+                  value={formData.image} />
+              </div>
 
+              <div>
+              </div>
+
+            </div>
           </div>
-        </div>
-        <div className="field  mt-4">
-          <label className="label">Password <span className="has-text-danger">*</span></label>
-          <div className="control">
-            <input
-              className="input has-border-green "
-              placeholder="Password"
-              type="password"
-              name={'password'}
-              onChange={handleChange}
-              value={formData.password}
-            />
-            <div className="content is-small">
-              <p>Password need to have the below requirements:            </p>
+
+          {/* Password */}
+          <div className="field  mt-4">
+            <label className="label">Password <span className="has-text-danger">*</span></label>
+            <div className="control">
+              <input
+                className="input has-border-green "
+                placeholder="Password"
+                type="password"
+                name={'password'}
+                onChange={handleChange}
+                value={formData.password}
+              />
               <ul>
-                {greenPassUpper && <li className="has-text-success">one uppercase</li>}
-                {!greenPassUpper && <li className="has-text-danger"> X one uppercase</li>}
-                {greenPassLower && <li className="has-text-success">one lowerCase</li>}
-                {!greenPassLower && <li className="has-text-danger"> X one lowerCase</li>}
-                {greenPassSpec && <li className="has-text-success">one special character</li>}
-                {!greenPassSpec && <li className="has-text-danger"> X one special character</li>}
-                {greenPassNum && <li className="has-text-success">one digit</li>}
-                {!greenPassNum && <li className="has-text-danger"> X one digit</li>}
-                {greenPassLength && <li className="has-text-success">Be between 8 and 20 character long</li>}
-                {!greenPassLength && <li className="has-text-danger"> X Be between 8 and 20 character long</li>}
+                {Object.entries(validationState.passwordCheck).map(([check, passed]) => {
+                  const checkMessage: Record<string, string> = {
+                    hasUppercase: "One uppercase letter", 
+                    hasLowercase: "One lowercase letter", 
+                    hasSpecialChar: "One special character (e.g., !@#$%)", 
+                    hasNumber: "One number", 
+                    hasValidLength: "Password must be between 8 and 20 characters", 
+                  };
+                  return (
+                    <li key={check} className={passed ? "has-text-success" : "has-text-danger"}>
+                      {passed ? "✅" : "❌"} {checkMessage[check]}
+                    </li>
+                  )
+                })}
               </ul>
-
             </div>
           </div>
-        </div>
-        <div className="field  mt-4">
-          <label className="label">Confirm password <span className="has-text-danger">*</span></label>
-          <div className="control">
-            <input
-              className="input has-border-green "
-              placeholder="Confirm password"
-              type="password"
-              name={'password_confirmation'}
-              onChange={handleChange}
-              value={formData.password_confirmation}
-            />
-            <h2 className="has-text-danger">{errorData}</h2>
+
+          {/* Confirm Password */}
+          <div className="field  mt-4">
+            <label className="label">Confirm password <span className="has-text-danger">*</span></label>
+            <div className="control">
+              <input
+                className="input has-border-green "
+                placeholder="Confirm password"
+                type="password"
+                name={'password_confirmation'}
+                onChange={handleChange}
+                value={formData.password_confirmation}
+              />
+              {errorData && <p className="has-text-danger">{errorData}</p>}
+            </div>
           </div>
+
+          {/* Submit button */}
+          <button
+            className="button has-border-green mt-4" onClick={handleSubmit}>Submit
+          </button>
         </div>
-        <button className="button has-border-green   mt-4" onClick={handleSubmit}>Submit</button>
-    </div>
-  </div>
-    <Footer />
-  </>
+      </div>
+      <Footer />
+    </>
+  )
 }
